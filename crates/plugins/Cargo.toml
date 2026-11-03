@@ -1,0 +1,21 @@
+[package]
+name = "clerdovector-plugins"
+description = "Sandboxed WebAssembly plug-ins for ClerdoVector: a resource-limited wasmi host for object filters and live effects"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+clerdovector-geom = { workspace = true }
+clerdovector-color = { workspace = true }
+clerdovector-doc = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+wasmi = { workspace = true }
+
+[dev-dependencies]
+wat = { workspace = true }

@@ -1,0 +1,26 @@
+[package]
+name = "clerdovector-cad"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector CAD interchange: a hand-written ASCII DXF writer (R12 to 2018)"
+
+[lints]
+workspace = true
+
+[dependencies]
+clerdovector-geom = { workspace = true }
+clerdovector-color = { workspace = true }
+clerdovector-doc = { workspace = true }
+clerdovector-effects = { workspace = true }
+clerdovector-brush = { workspace = true }
+clerdovector-pathops = { workspace = true }
+clerdovector-text = { workspace = true }
+kurbo = { workspace = true }
+image = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+# The tests lay type out in the bundled fonts (the workspace leaves turning them on to the engine)
+# and in fonts built in code (`clerdovector_text::test_fonts`).
+clerdovector-text = { workspace = true, features = ["bundled-fonts", "test-fonts"] }

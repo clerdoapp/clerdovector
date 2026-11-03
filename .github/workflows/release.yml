@@ -1,0 +1,156 @@
+# Builds ClerdoVector for every platform and publishes a GitHub Release.
+#
+#   Publish:  push a tag that matches the version in Cargo.toml, e.g.
+#               git tag v0.20.0 && git push origin v0.20.0
+#   Test run: Actions › Release › Run workflow (builds everything and keeps the files as workflow
+#             artifacts, but publishes nothing).
+#
+# Help › Check for Updates in these builds follows this repository's releases (CLERDOVECTOR_REPO).
+# The builds aren't code-signed: add signing secrets later (see packaging/*/).
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  CLERDOVECTOR_REPO: ${{ github.repository }}
+
+jobs:
+  version:
+    name: Check the version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        name: Tag matches Cargo.toml
+        run: |
+          set -euo pipefail
+          version=$(awk '/^\[/ { p = ($0 == "[workspace.package]"); next } p && $1 == "version" { gsub(/[" ]/, "", $3); print $3; exit }' Cargo.toml)
+          echo "Cargo.toml version: $version"
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" != "v$version" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME doesn't match the version in Cargo.toml ($version). Tag v$version, or change [workspace.package] version first."
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  windows:
+    name: Windows (.msi, .exe)
+    needs: version
+    runs-on: windows-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: windows-release
+      - name: Install WiX
+        shell: pwsh
+        run: |
+          dotnet tool install --global wix --version 5.0.2
+          wix extension add -g WixToolset.UI.wixext/5.0.2 WixToolset.Util.wixext/5.0.2
+      - name: Build and package
+        shell: pwsh
+        run: pwsh packaging/windows/package.ps1 -Arch x64
+      - name: Add the plain .exe
+        shell: pwsh
+        run: |
+          $exe = 'target\x86_64-pc-windows-msvc\release\clerdovector.exe'
+          Copy-Item $exe "dist\release\clerdovector-${{ needs.version.outputs.version }}-windows-x64.exe"
+          Get-ChildItem dist\release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: |
+            dist/release/*.msi
+            dist/release/*.zip
+            dist/release/*.exe
+          if-no-files-found: error
+
+  macos:
+    name: macOS (.dmg)
+    needs: version
+    runs-on: macos-14
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: macos-release
+      - name: Build and package (Apple Silicon + Intel in one app)
+        run: packaging/macos/package.sh --arch universal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: |
+            dist/release/*.dmg
+            dist/release/*.zip
+          if-no-files-found: error
+
+  linux:
+    name: Linux (.AppImage, .deb, .rpm)
+    needs: version
+    # The oldest supported Ubuntu: the binaries then run on every newer distro.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: linux-release
+      - name: Install packaging tools
+        run: |
+          set -euo pipefail
+          echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+          sudo apt-get update
+          sudo apt-get install -y nfpm zsync libxkbcommon-dev libwayland-dev
+      - name: Build and package
+        run: packaging/linux/package.sh --formats "appimage deb rpm tar"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            dist/release/*.AppImage
+            dist/release/*.AppImage.zsync
+            dist/release/*.deb
+            dist/release/*.rpm
+            dist/release/*.tar.gz
+          if-no-files-found: error
+
+  publish:
+    name: Publish the release
+    if: github.ref_type == 'tag'
+    needs: [version, windows, macos, linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: ClerdoVector ${{ needs.version.outputs.version }}
+          generate_release_notes: true
+          files: dist/*

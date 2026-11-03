@@ -1,0 +1,33 @@
+[package]
+name = "clerdovector-mcp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector MCP server: JSON-RPC 2.0 over stdio, driving a running app or a headless session"
+
+[lints]
+workspace = true
+
+[features]
+default = ["bundled-fonts"]
+# The fonts clerdovector-text bundles for documents, through the engine's `bundled-fonts`, as
+# clerdovector-ui-egui's. Off, for an embedder that supplies every document font at run time.
+bundled-fonts = ["clerdovector-engine/bundled-fonts"]
+
+[dependencies]
+clerdovector-engine = { workspace = true }
+clerdovector-render = { workspace = true }
+clerdovector-svg = { workspace = true }
+clerdovector-format = { workspace = true }
+clerdovector-tools = { workspace = true }
+clerdovector-geom = { workspace = true }
+clerdovector-doc = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+
+image = { workspace = true }
+
+[dev-dependencies]
+clerdovector-testkit = { workspace = true }
+proptest = { workspace = true }
+socket2 = { workspace = true }

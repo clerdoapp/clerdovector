@@ -1,0 +1,41 @@
+{
+  "id": "clerdovector",
+  "name": "ClerdoVector",
+  "upgradeCode": "601C6437-08AE-4645-ADCC-27F036C2EA2F",
+  "sources": [
+    "clerdovector.wxs"
+  ],
+  "icon": "assets/app-icon/clerdovector.ico",
+  "localization": [
+    "clerdovector.en-us.wxl"
+  ],
+  "extensions": [
+    "UI",
+    "Util"
+  ],
+  "payloads": [
+    "clerdovector-cli.exe",
+    "clerdovector.exe"
+  ],
+  "registry": [
+    [
+      "-1",
+      "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\clerdovector.exe",
+      "",
+      "[#ClerdovectorExe]"
+    ],
+    [
+      "-1",
+      "Software\\ClerdoVector",
+      "InstallDir",
+      "[INSTALLFOLDER]"
+    ],
+    [
+      "-1",
+      "Software\\ClerdoVector",
+      "DesktopShortcut",
+      "#1"
+    ]
+  ],
+  "mode": "dualScope"
+}

@@ -1,0 +1,39 @@
+[package]
+name = "clerdovector-eps"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector Encapsulated PostScript: a hand-written EPS writer (PostScript Level 2 and 3) with TIFF previews"
+
+[lints]
+workspace = true
+
+[dependencies]
+clerdovector-geom = { workspace = true }
+clerdovector-color = { workspace = true }
+clerdovector-doc = { workspace = true }
+clerdovector-effects = { workspace = true }
+clerdovector-brush = { workspace = true }
+clerdovector-text = { workspace = true }
+# Windows metafile previews, opened when a file's PostScript can't be read.
+clerdovector-metafile = { workspace = true }
+# Non-native art in Illustrator editing data (a placed PDF's content, kept as a PDF).
+clerdovector-pdf = { workspace = true }
+# The TIFF writer (previews) and PackBits, shared with raster export.
+clerdovector-render = { workspace = true }
+kurbo = { workspace = true }
+image = { workspace = true }
+flate2 = { workspace = true }
+ruzstd = { workspace = true }
+# Images read through `CCITTFaxDecode`.
+hayro-ccitt = { workspace = true }
+# Live effects' params, as the art styles that name them give them.
+serde_json = { workspace = true }
+# Substring search for PostScript `search`.
+memchr = { workspace = true }
+
+[dev-dependencies]
+clerdovector-testkit = { workspace = true }
+clerdovector-text = { workspace = true, features = ["test-fonts"] }
+# Tests: a Group 4 encoder and the T.4 run codes, to write CCITT test images.
+fax = "0.2"

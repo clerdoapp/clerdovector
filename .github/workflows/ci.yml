@@ -1,0 +1,35 @@
+# Every push and pull request: the code compiles and the core tests pass.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    name: Build and test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Formatting
+        run: cargo fmt --all --check
+      - name: Build
+        run: cargo build --locked -p clerdovector -p clerdovector-cli
+      - name: Tests (file formats, SVG, PDF, EPS)
+        run: cargo test --locked -p clerdovector-format -p clerdovector-svg -p clerdovector-pdf -p clerdovector-eps

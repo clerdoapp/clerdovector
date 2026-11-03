@@ -1,0 +1,25 @@
+[package]
+name = "clerdovector-testkit"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector test helpers: fixtures, generators, render comparison, geometry assertions"
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+clerdovector-geom = { workspace = true }
+clerdovector-color = { workspace = true }
+clerdovector-doc = { workspace = true }
+clerdovector-engine = { workspace = true, features = ["bundled-fonts"] }
+clerdovector-render = { workspace = true }
+clerdovector-format = { workspace = true }
+clerdovector-svg = { workspace = true }
+kurbo = { workspace = true }
+serde_json = { workspace = true }
+proptest = { workspace = true }
+image = { workspace = true }
+# A Group 4 encoder and the T.4 run codes, to write CCITT Group 3 TIFFs (`tiff::group3`).
+fax = "0.2"

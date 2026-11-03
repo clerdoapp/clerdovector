@@ -1,0 +1,23 @@
+[package]
+name = "clerdovector-effects"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector live effects evaluated to geometry"
+
+[lints]
+workspace = true
+
+[dependencies]
+clerdovector-geom = { workspace = true }
+clerdovector-three-d = { workspace = true }
+clerdovector-doc = { workspace = true }
+clerdovector-pathops = { workspace = true }
+clerdovector-text = { workspace = true }
+clerdovector-plugins = { workspace = true }
+image = { workspace = true }
+kurbo = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+clerdovector-color = { workspace = true }

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- ClerdoVector app icon: vector redraw of the ClerdoVector artwork supplied by Clerdo. -->
+  <g transform="scale(0.624390244)">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101b2e"/>
+      <stop offset="1" stop-color="#0c1422"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4a6a"/>
+      <stop offset="1" stop-color="#2a3854"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="820" height="820" rx="132"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="820" height="820" fill="url(#rim)"/>
+    <rect x="13" y="13" width="794" height="794" rx="120" fill="url(#tile)"/>
+  </g>
+  <g fill="none" stroke="#eba046" stroke-width="7" stroke-linecap="round">
+    <path d="M295 186 C 220 255 186 470 293 572 C 335 612 392 632 440 632 C 528 632 640 566 645 468"/>
+    <path d="M133 407 L 293 572"/>
+    <path d="M250 632 H 636"/>
+  </g>
+  <g fill="#eba046">
+    <rect x="279" y="167" width="33" height="33"/>
+    <rect x="629" y="448" width="33" height="33"/>
+    <rect x="424" y="616" width="33" height="33"/>
+    <rect x="277" y="556" width="33" height="33" transform="rotate(45 293.5 572.5)"/>
+    <circle cx="133" cy="407" r="16"/>
+    <circle cx="250" cy="632" r="16"/>
+    <circle cx="636" cy="632" r="16"/>
+  </g>
+  <!-- nib body: light left half, darker right half, split on the nib's axis -->
+  <path d="M306 548 L 378 320 L 532 247 L 622 336 L 546 470 Z" fill="#efa13d"/>
+  <path d="M306 548 L 576 291 L 622 336 L 546 470 Z" fill="#d9862a"/>
+  <!-- cap -->
+  <path d="M538 213 L 582 152 L 701 268 L 633 314 Z" fill="#efa13d"/>
+  <path d="M590 263 L 641 210 L 701 268 L 633 314 Z" fill="#d9862a"/>
+  <!-- slit and breather hole -->
+  <path d="M312 540 L 455 402" stroke="#0e1828" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="456" cy="401" r="25" fill="#0e1828"/>
+  </g>
+</svg>

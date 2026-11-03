@@ -1,0 +1,5 @@
+ClerdoVector app icon (clerdovector.svg, clerdovector-small.svg and every file derived from them in this
+directory: clerdovector-1024.png, clerdovector-macos-512.png, clerdovector.icns, clerdovector.ico, hicolor/).
+
+ClerdoVector artwork belongs to Clerdo. It is part of the Clerdo brand and is not covered by the
+MIT / Apache-2.0 licence of the source code.

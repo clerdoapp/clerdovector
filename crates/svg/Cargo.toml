@@ -1,0 +1,42 @@
+[package]
+name = "clerdovector-svg"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ClerdoVector SVG import and export"
+
+[lints]
+workspace = true
+
+[dependencies]
+# Which paths stored in documents may be opened.
+craft-docpath = { workspace = true }
+clerdovector-geom = { workspace = true }
+clerdovector-color = { workspace = true }
+clerdovector-doc = { workspace = true }
+clerdovector-effects = { workspace = true }
+clerdovector-brush = { workspace = true }
+clerdovector-text = { workspace = true }
+kurbo = { workspace = true }
+usvg = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+# Live effect params read from filters.
+serde_json = { workspace = true }
+# SVGZ (gzip, pure-Rust backend: builds for wasm).
+flate2 = { workspace = true }
+image = { workspace = true }
+# Colour / transform / length parsing for the <text> fallback (MIT OR Apache-2.0; already used by usvg).
+svgtypes = "0.16"
+
+[dev-dependencies]
+# Reading embedded font subsets back.
+skrifa = { workspace = true }
+# A variable font built in code (no font file is committed).
+clerdovector-text = { workspace = true, features = ["test-fonts"] }
+resvg = { version = "0.45", default-features = false, features = ["raster-images"] }
+# usvg as a reference viewer that lays text out in a font (text_layout.rs).
+usvg = { workspace = true, features = ["text"] }
+clerdovector-testkit = { workspace = true }
+proptest = { workspace = true }
+image = { workspace = true }
