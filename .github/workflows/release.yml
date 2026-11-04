@@ -32,7 +32,7 @@ jobs:
     outputs:
       version: ${{ steps.v.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: v
         name: Tag matches Cargo.toml
         run: |
@@ -51,7 +51,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 180
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-pc-windows-msvc
@@ -72,7 +72,7 @@ jobs:
           $exe = 'target\x86_64-pc-windows-msvc\release\clerdovector.exe'
           Copy-Item $exe "dist\release\clerdovector-${{ needs.version.outputs.version }}-windows-x64.exe"
           Get-ChildItem dist\release
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows
           path: |
@@ -87,7 +87,7 @@ jobs:
     runs-on: macos-14
     timeout-minutes: 240
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin,x86_64-apple-darwin
@@ -96,7 +96,7 @@ jobs:
           key: macos-release
       - name: Build and package (Apple Silicon + Intel in one app)
         run: packaging/macos/package.sh --arch universal
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: macos
           path: |
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 180
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -124,7 +124,7 @@ jobs:
           sudo apt-get install -y nfpm zsync libxkbcommon-dev libwayland-dev
       - name: Build and package
         run: packaging/linux/package.sh --formats "appimage deb rpm tar"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux
           path: |
@@ -143,13 +143,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
       - name: Checksums
         run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           name: ClerdoVector ${{ needs.version.outputs.version }}
           generate_release_notes: true
