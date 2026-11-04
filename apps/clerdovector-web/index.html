@@ -16,7 +16,7 @@
   <link rel="icon" type="image/svg+xml" href="icons/app.clerdo.clerdovector.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/32/app.clerdo.clerdovector.png">
   <link rel="apple-touch-icon" href="icons/256/app.clerdo.clerdovector.png">
-  <link data-trunk rel="rust" data-bin="clerdovector-web" data-cargo-profile="web" data-wasm-opt="z" data-weak-refs />
+  <link data-trunk rel="rust" data-bin="clerdovector-web" data-cargo-profile="web" data-wasm-opt="z" data-weak-refs data-initializer="loading.js" />
   <style>
     /* iPad: no page scroll, bounce, pinch zoom, text selection or callout; the app takes the gestures. */
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #262626;
@@ -29,11 +29,23 @@
       height: calc(100% - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
       display: block; touch-action: none; }
     #clerdovector_loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: #b8b8b8; font: 14px system-ui, sans-serif; pointer-events: none; }
+      color: #b8b8b8; font: 14px system-ui, sans-serif; pointer-events: none; gap: 10px; }
+    /* Download progress (loading.js), replaced by the app's own text once it starts. */
+    #clerdovector_loading [data-part="bar"] { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    #clerdovector_loading [data-part="bar"][hidden] { display: none; }
+    #clerdovector_loading [data-part="track"] { width: min(260px, 60vw); height: 4px; border-radius: 2px; background: #3a3a3a; overflow: hidden; }
+    #clerdovector_loading [data-part="fill"] { width: 0; height: 100%; background: #efa13d; transition: width 0.2s linear; }
+    #clerdovector_loading [data-part="count"] { font-size: 12px; color: #8a8a8a; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
   <canvas id="clerdovector_canvas"></canvas>
-  <div id="clerdovector_loading">Loading ClerdoVector&hellip;</div>
+  <div id="clerdovector_loading">
+    <span>Loading ClerdoVector&hellip;</span>
+    <div data-part="bar" hidden>
+      <div data-part="track"><div data-part="fill"></div></div>
+      <span data-part="count"></span>
+    </div>
+  </div>
 </body>
 </html>
