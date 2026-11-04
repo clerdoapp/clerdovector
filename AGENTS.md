@@ -85,6 +85,6 @@ When a task lands, update in the same PR: the area row in `docs/target-app-parit
   GitHub profiles). Never hand-edit `contributors.json`.
 
 ## CI workflows
-- Workflows in `.github/workflows/` call the shared workflows in [`storytold/craft-common-actions`](https://github.com/storytold/craft-common-actions) at `@main`, with their inputs and secrets. No other jobs: if no shared workflow does what's needed, it doesn't go here.
-- Don't add or change CI in a feature or fix PR. If the existing workflows can't build or test a change, link an existing craft-common-actions issue or PR, or open a new issue, or a PR only for a small fix that is safe for every app and does not increase CI time.
-- Some workflow files here still run their own jobs. Don't add to them. Moving a job into craft-common-actions is its own task, never part of another PR, and the job stays here until a shared workflow runs it.
+- `.github/workflows/ci.yml`: every push to `main` and every pull request: formatting, a build, and the format/SVG/PDF/EPS tests.
+- `.github/workflows/release.yml`: a `v<version>` tag (matching `[workspace.package] version`) builds the Windows `.msi`/`.exe`, the macOS `.dmg` and the Linux AppImage/`.deb`/`.rpm` with `packaging/*`, and publishes a GitHub Release. Help › Check for Updates follows those releases (`CLERDOVECTOR_REPO`).
+- `.github/workflows/pages.yml`: the same tag publishes the web version to GitHub Pages (the iPad and browser build).
