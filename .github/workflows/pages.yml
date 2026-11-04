@@ -1,0 +1,55 @@
+# Publishes the web version (runs in any modern browser, including Safari on iPad, where Share ›
+# Add to Home Screen gives it an app icon) to GitHub Pages: https://<owner>.github.io/<repo>/
+# Runs on every version tag, and by hand from Actions › Web app › Run workflow.
+name: Web app
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: web
+      - name: Install Trunk
+        run: cargo install trunk --locked
+      - name: Build
+        working-directory: apps/clerdovector-web
+        run: trunk build --release
+      - name: Sizes
+        run: ls -la dist/web && du -sh dist/web
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

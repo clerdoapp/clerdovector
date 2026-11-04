@@ -44,6 +44,7 @@ Get the latest build from the [Releases page](../../releases/latest):
 | Windows | `.msi` installer, or the portable `.zip` / `.exe` |
 | macOS | `.dmg` (Apple Silicon and Intel) |
 | Linux | `.AppImage` (any distro), `.deb` (Ubuntu, Debian, Mint) or `.rpm` (Fedora, openSUSE) |
+| iPad and web | Open **[clerdoapp.github.io/clerdovector](https://clerdoapp.github.io/clerdovector/)** in Safari, then **Share › Add to Home Screen** |
 
 The builds aren't code-signed yet:
 
