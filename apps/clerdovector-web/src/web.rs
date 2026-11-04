@@ -60,6 +60,7 @@ struct Host {
 
 pub fn start() {
     eframe::WebLogger::init(log::LevelFilter::Info).ok();
+    show_panics();
     let Some(canvas) = element(CANVAS_ID).and_then(|e| e.dyn_into::<web_sys::HtmlCanvasElement>().ok()) else {
         log::error!("missing <canvas id=\"{CANVAS_ID}\">");
         return;
@@ -160,15 +161,50 @@ async fn run(host: Host, canvas: web_sys::HtmlCanvasElement, moving: Option<Movi
     }
 }
 
-/// The runner's options: wgpu (WebGPU where available, else WebGL2; `?webgl` forces WebGL2).
+/// The runner's options: wgpu, with WebGPU where available and WebGL2 otherwise. Apple's WebKit
+/// (Safari, and every browser on iPad and iPhone) starts on WebGL2: its WebGPU stopped the app
+/// before the first frame on iPad. `?webgl` forces WebGL2 anywhere, `?webgpu` allows WebGPU on
+/// WebKit too.
 fn web_options() -> eframe::WebOptions {
     let mut options = eframe::WebOptions::default();
-    if query().contains("webgl")
-        && let eframe::egui_wgpu::WgpuSetup::CreateNew(create) = &mut options.wgpu_options.wgpu_setup
-    {
+    let query = query();
+    let webgl = query.contains("webgl") || (apple_webkit() && !query.contains("webgpu"));
+    if webgl && let eframe::egui_wgpu::WgpuSetup::CreateNew(create) = &mut options.wgpu_options.wgpu_setup {
         create.instance_descriptor.backends = eframe::wgpu::Backends::GL;
     }
     options
+}
+
+/// Safari, or any browser on iPad or iPhone (all of them are WebKit there). iPadOS asks for desktop
+/// pages and calls itself a Mac, so a Mac with a touch screen counts as an iPad.
+fn apple_webkit() -> bool {
+    let Some(navigator) = web_sys::window().map(|w| w.navigator()) else { return false };
+    let ua = navigator.user_agent().unwrap_or_default();
+    let mobile = ["iPad", "iPhone", "iPod"].iter().any(|d| ua.contains(d));
+    let touch_mac = ua.contains("Macintosh") && navigator.max_touch_points() > 1;
+    let safari =
+        ua.contains("AppleWebKit") && ua.contains("Safari") && !["Chrome", "Chromium", "Edg/", "OPR/", "Android"].iter().any(|b| ua.contains(b));
+    mobile || touch_mac || safari
+}
+
+/// Put a panic's message on the page as well as in the console: on a tablet there is no console to
+/// look in, and the app can't go on after one (wasm aborts).
+fn show_panics() {
+    let previous = std::panic::take_hook();
+    std::panic::set_hook(Box::new(move |info| {
+        previous(info);
+        let what = info
+            .payload()
+            .downcast_ref::<&str>()
+            .map(|s| (*s).to_string())
+            .or_else(|| info.payload().downcast_ref::<String>().cloned())
+            .unwrap_or_default();
+        let place = info.location().map(|l| format!(" ({}:{})", l.file(), l.line())).unwrap_or_default();
+        let error = format!("ClerdoVector stopped because of an error: {what}{place}");
+        let tip =
+            if query().contains("webgl") { "Reload the page to try again." } else { "Reload the page, or add ?webgl to the address to use WebGL." };
+        notice(&[&error, tip]);
+    }));
 }
 
 /// Tell the UI the browser's languages (`?lang=es` in the address first, as `CLERDOVECTOR_LOCALE`
