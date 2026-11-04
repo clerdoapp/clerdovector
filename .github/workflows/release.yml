@@ -137,7 +137,10 @@ jobs:
 
   publish:
     name: Publish the release
-    if: github.ref_type == 'tag'
+    # Publishes whatever built, so a platform whose runner was unavailable (GitHub's Mac runners
+    # run out at busy times) doesn't hold back the others. Re-run that job later with
+    # "Re-run failed jobs": this job runs again and adds its files to the same release.
+    if: ${{ !cancelled() && github.ref_type == 'tag' && needs.version.result == 'success' }}
     needs: [version, windows, macos, linux]
     runs-on: ubuntu-latest
     permissions:
@@ -148,9 +151,13 @@ jobs:
           path: dist
           merge-multiple: true
       - name: Checksums
-        run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+        run: |
+          set -euo pipefail
+          ls dist/* >/dev/null 2>&1 || { echo "::error::No platform built; nothing to publish."; exit 1; }
+          cd dist && rm -f SHA256SUMS.txt && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
       - uses: softprops/action-gh-release@v2
         with:
           name: ClerdoVector ${{ needs.version.outputs.version }}
           generate_release_notes: true
+          fail_on_unmatched_files: false
           files: dist/*
