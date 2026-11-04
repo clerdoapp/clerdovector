@@ -9,7 +9,7 @@ this file describes what is committed. Day-to-day rules (clean-room, never crash
 ## Shape
 
 A Cargo workspace of 23 library crates under `crates/`, three apps under `apps/` and `xtask`, ~354k lines of Rust,
-pure Rust (no handwritten JS/TS). The same engine runs the desktop app, the browser build (WASM), the headless
+pure Rust (no handwritten JS/TS, apart from the web page's download progress bar, `apps/clerdovector-web/loading.js`). The same engine runs the desktop app, the browser build (WASM), the headless
 CLI and the MCP server.
 
 ## Layers
