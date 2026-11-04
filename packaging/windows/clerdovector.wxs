@@ -12,7 +12,7 @@
     <Property Id="ARPPRODUCTICON" Value="ClerdovectorIcon.ico" />
     <Property Id="ARPURLINFOABOUT" Value="https://clerdo.app" />
     <Property Id="ARPURLUPDATEINFO" Value="https://clerdo.app" />
-    <Property Id="ARPHELPLINK" Value="https://clerdo.app" />
+    <Property Id="ARPHELPLINK" Value="https://discord.gg/CHu4QqrWtf" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
       <Directory Id="CraftSuiteFolder" Name="Clerdo">

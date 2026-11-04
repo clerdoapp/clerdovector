@@ -13,6 +13,7 @@
 
 <p align="center">
   <a href="https://clerdo.app">Website</a> ·
+  <a href="https://discord.gg/CHu4QqrWtf">Discord</a> ·
   <a href="../../releases/latest">Download</a> ·
   <a href="LICENSE-MIT">MIT</a> / <a href="LICENSE-APACHE">Apache-2.0</a>
 </p>
@@ -93,7 +94,7 @@ More: [docs/development.md](docs/development.md) · [docs/mcp.md](docs/mcp.md) �
 
 ## Contributing
 
-Bug reports and ideas are welcome in [Issues](../../issues), and pull requests too. Two rules:
+Questions and chat are on [Discord](https://discord.gg/CHu4QqrWtf). Bug reports and ideas are welcome in [Issues](../../issues), and pull requests too. Two rules:
 
 - Nothing may be copied from Adobe software, its files or its artwork.
 - No GPL or AGPL code.

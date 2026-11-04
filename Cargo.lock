@@ -774,7 +774,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "arboard",
  "block2 0.6.2",
@@ -818,7 +818,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-affinity"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "crc32fast",
  "flate2",
@@ -829,7 +829,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-brush"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-color",
  "clerdovector-doc",
@@ -841,7 +841,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-cad"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -857,7 +857,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-cli"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-color",
  "clerdovector-doc",
@@ -879,7 +879,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-color"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "kurbo 0.13.1",
  "moxcms",
@@ -891,7 +891,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-doc"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "chrono",
  "clerdovector-color",
@@ -910,7 +910,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-effects"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-color",
  "clerdovector-doc",
@@ -926,7 +926,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-engine"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "cfb",
  "clerdovector-affinity",
@@ -967,7 +967,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-eps"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -991,7 +991,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-format"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-doc",
  "clerdovector-geom",
@@ -1006,7 +1006,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-geom"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-testkit",
  "kurbo 0.13.1",
@@ -1018,7 +1018,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-mcp"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-doc",
  "clerdovector-engine",
@@ -1037,7 +1037,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-metafile"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -1051,7 +1051,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-pathops"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-geom",
  "clerdovector-testkit",
@@ -1063,7 +1063,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-pdf"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "aes",
  "chrono",
@@ -1095,7 +1095,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-plugins"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-color",
  "clerdovector-doc",
@@ -1109,7 +1109,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-render"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -1139,14 +1139,14 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-scriptcheck"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "proptest",
 ]
 
 [[package]]
 name = "clerdovector-svg"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -1171,7 +1171,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-testkit"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-color",
  "clerdovector-doc",
@@ -1189,7 +1189,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-text"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-doc",
  "clerdovector-geom",
@@ -1210,7 +1210,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-three-d"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-geom",
  "clerdovector-pathops",
@@ -1218,7 +1218,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-tools"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-brush",
  "clerdovector-color",
@@ -1235,7 +1235,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-trace"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-geom",
  "image",
@@ -1247,7 +1247,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-ui-egui"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "bytemuck",
  "clerdovector-brush",
@@ -1285,7 +1285,7 @@ dependencies = [
 
 [[package]]
 name = "clerdovector-web"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "clerdovector-engine",
  "clerdovector-format",
@@ -7565,7 +7565,7 @@ checksum = "9440ea3e5aeabb0ac63af70daf835274065238cdd0cec83418f417eae38bacee"
 
 [[package]]
 name = "xtask"
-version = "0.20.0"
+version = "0.20.1"
 dependencies = [
  "serde_json",
 ]

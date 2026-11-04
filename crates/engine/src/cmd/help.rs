@@ -7,8 +7,8 @@ use super::{CommandSpec, Result, always, cmd};
 
 /// The app's id.
 pub const APP_ID: &str = "clerdovector";
-/// The ClerdoVector community Discord. Until its invite is set here, the button opens the website.
-pub const DISCORD_URL: &str = "https://clerdo.app";
+/// The ClerdoVector community Discord.
+pub const DISCORD_URL: &str = "https://discord.gg/CHu4QqrWtf";
 /// Clerdo's website.
 pub const WEBSITE_URL: &str = "https://clerdo.app";
 /// `owner/name` of the GitHub repository this build was made from (set by the release workflow).
