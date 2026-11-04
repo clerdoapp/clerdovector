@@ -273,20 +273,7 @@ fn ai_export_public_aliases_preserve_missing_placed_links() {
     let original = placed(&s, id);
     assert!(s.doc().unwrap().doc.images[&original.key].is_proxy());
 
-    for alias in [
-        "clerdovector",
-        ".clerdovector",
-        "CLERDOVECTOR",
-        "drawcraft",
-        ".DRAWCRAFT",
-        "template",
-        "vctemplate",
-        ".VCTEMPLATE",
-        "ai",
-        ".ai",
-        "AI",
-        ".AI",
-    ] {
+    for alias in ["clerdovector", ".clerdovector", "CLERDOVECTOR", "template", "vctemplate", ".VCTEMPLATE", "ai", ".ai", "AI", ".AI"] {
         let canonical = cmd::fileio::format(alias).unwrap().id;
         let enc = cmd::fileio::encode_all(&s.doc().unwrap().doc, alias, &json!({"pdfCompatible": false, "includeLinked": false})).unwrap();
         let bytes = &enc.files[0].1;

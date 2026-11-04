@@ -7,7 +7,7 @@
 //! `current_filter`, reads the one picked back, and answers its first extension after the path
 //! ([`clerdovector_ui_egui::picks::PickAnswer`]); the app gives the name that type's extension.
 //! rfd shows the dialog when the portal can't (no session bus, no file chooser), with zenity as its
-//! own fallback. PhotoCraft's `portal_save.rs` (storytold/photocraft#6151) makes the same call.
+//! own fallback.
 //!
 //! The dialog's parent is the window: `x11:<window id>` on X11, and on Wayland (Linux) a handle
 //! from the compositor's xdg-foreign protocol, as rfd names it (its `window_identifier`).
@@ -443,7 +443,7 @@ mod tests {
     }
 
     /// A session bus of its own (`dbus-daemon`) with a mock `org.freedesktop.portal.FileChooser`
-    /// that answers `SaveFile` from `script` as `portal` says, as PhotoCraft's portal tests run it.
+    /// that answers `SaveFile` from `script` as `portal` says.
     /// `None` when there is no `dbus-daemon` to run.
     #[cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))]
     fn mock_portal(script: Script, portal: Portal) -> Option<(zbus::blocking::Connection, Seen, std::process::Child)> {

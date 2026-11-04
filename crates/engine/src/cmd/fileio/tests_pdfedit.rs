@@ -97,22 +97,6 @@ fn pages_changed_elsewhere_are_noticed_with_a_utf16_description() {
 }
 
 #[test]
-fn the_legacy_payload_name_is_accepted() {
-    let mut s = rich();
-    let before = comparable(&s.doc().unwrap().doc);
-    let pdf = b64(&s.execute("document.exportPdf", &json!({"compression": {"compressText": false}})).unwrap());
-    let (name, legacy) = (format!("({})", clerdovector_pdf::EDITING_FILE), format!("({})", clerdovector_pdf::LEGACY_EDITING_FILE));
-    let legacy = format!("{legacy}{}", " ".repeat(name.len() - legacy.len()));
-    let mut old = pdf.clone();
-    while let Some(at) = old.windows(name.len()).position(|w| w == name.as_bytes()) {
-        old[at..at + name.len()].copy_from_slice(legacy.as_bytes());
-    }
-    assert!(!String::from_utf8_lossy(&old).contains(clerdovector_pdf::EDITING_FILE));
-    assert_eq!(open(&mut s, "old.pdf", &old)["restored"], true);
-    assert_eq!(comparable(&s.doc().unwrap().doc), before);
-}
-
-#[test]
 fn ai_files_are_pdfs_that_save_and_reopen_editable() {
     let mut s = rich();
     let path = tmp("art.ai");

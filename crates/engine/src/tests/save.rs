@@ -216,31 +216,26 @@ fn templates_suggest_a_name_in_the_templates_folder_and_open_untitled() {
     let _ = std::fs::remove_dir_all(d);
 }
 
-/// A native file as an older version wrote it: under the former name, or format version 1.
-fn old_file(legacy: bool) -> Vec<u8> {
+/// A native file as an older version wrote it (format version 1).
+fn old_file() -> Vec<u8> {
     let text = String::from_utf8(clerdovector_format::save(&clerdovector_doc::Document::new(50.0, 50.0), false)).unwrap();
-    let text = if legacy {
-        text.replacen("\"format\":\"clerdovector\"", "\"format\":\"drawcraft\"", 1)
-    } else {
-        text.replacen(&format!("\"version\":{}", clerdovector_format::VERSION), "\"version\":1", 1)
-    };
-    text.into_bytes()
+    text.replacen(&format!("\"version\":{}", clerdovector_format::VERSION), "\"version\":1", 1).into_bytes()
 }
 
 #[test]
 fn older_native_files_open_converted_and_save_under_a_new_name() {
     let d = dir("converted");
-    let legacy = path(&d, "logo.drawcraft");
-    std::fs::write(&legacy, old_file(true)).unwrap();
+    let legacy = path(&d, "logo.clerdovector");
+    std::fs::write(&legacy, old_file()).unwrap();
     let v1 = path(&d, "badge.clerdovector");
-    std::fs::write(&v1, old_file(false)).unwrap();
+    std::fs::write(&v1, old_file()).unwrap();
     let mut s = Session::new();
     s.execute("document.open", &json!({"path": legacy})).unwrap();
     assert_eq!(s.doc().unwrap().title(), "logo [Converted]");
-    // Save doesn't overwrite the old file: it asks for a .clerdovector name.
+    // Save doesn't overwrite the old file: it asks for a name.
     let r = s.execute("document.save", &json!({})).unwrap();
     assert_eq!((r["name"].as_str(), r.get("path")), (Some("logo.clerdovector"), None));
-    assert_eq!(std::fs::read(&legacy).unwrap(), old_file(true));
+    assert_eq!(std::fs::read(&legacy).unwrap(), old_file());
     let r = s.execute("document.open", &json!({"path": v1})).unwrap();
     assert_eq!(r["title"], "badge [Converted]");
     let saved = path(&d, "badge2.clerdovector");
@@ -252,7 +247,7 @@ fn older_native_files_open_converted_and_save_under_a_new_name() {
     assert_eq!(s.doc().unwrap().title(), "badge2.clerdovector");
     s.prefs.append_converted = false;
     s.execute("document.open", &json!({"path": legacy})).unwrap();
-    assert_eq!(s.doc().unwrap().title(), "logo.drawcraft");
+    assert_eq!(s.doc().unwrap().title(), "logo.clerdovector");
     assert_eq!(s.execute("document.save", &json!({})).unwrap()["path"].as_str(), Some(legacy.as_str()));
     let _ = std::fs::remove_dir_all(d);
 }

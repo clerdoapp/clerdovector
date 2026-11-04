@@ -54,7 +54,7 @@ fn compressed_saves_open_by_their_content() {
     let plain = saved(&mut s, json!({}));
     assert!(!is_compressed(&plain) && packed.len() < plain.len());
     // Recognised by its content, whatever the name says.
-    for name in ["a.clerdovector", "a.drawcraft", "a.svgz", "a.bin"] {
+    for name in ["a.clerdovector", "a.svgz", "a.bin"] {
         let r = open(&mut s, name, &packed);
         assert_eq!(r["format"], "clerdovector", "{name}");
         assert_eq!(s.doc().unwrap().doc.node_count(), 2);
@@ -82,8 +82,8 @@ fn saves_for_older_versions() {
     for v in [1, 2] {
         let bytes = saved(&mut s, json!({"version": v}));
         let j = json_of(&bytes);
-        assert_eq!((j["format"].as_str(), j["version"].as_u64()), (Some("drawcraft"), Some(v)));
-        open(&mut s, "old.drawcraft", &bytes);
+        assert_eq!((j["format"].as_str(), j["version"].as_u64()), (Some("clerdovector"), Some(v)));
+        open(&mut s, "old.clerdovector", &bytes);
         assert_eq!(s.doc().unwrap().doc.node_count(), 2);
     }
     for bad in [json!({"version": 0}), json!({"version": 9}), json!({"version": "two"})] {
@@ -117,7 +117,7 @@ fn an_older_version_is_pretty_only_when_its_own_json_fits() {
     assert!(is_pretty(&saved(&mut s, json!({"compress": false}))));
     let old = saved(&mut s, json!({"version": 1}));
     assert!(!is_pretty(&old), "{} bytes", old.len());
-    open(&mut s, "old.drawcraft", &old);
+    open(&mut s, "old.clerdovector", &old);
     assert_eq!(s.doc().unwrap().doc.node_count(), 2);
 }
 

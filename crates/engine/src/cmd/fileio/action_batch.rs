@@ -408,12 +408,11 @@ fn output_path(folder: &str, stem: &str, ext: &str) -> Option<std::path::PathBuf
 #[cfg(not(target_arch = "wasm32"))]
 fn write_result(s: &mut Session, path: &str, ext: &str, as_copy: bool) -> Result<()> {
     use super::SAVE_FORMATS;
-    let id = if ext == "drawcraft" { "clerdovector" } else { ext };
-    if SAVE_FORMATS.contains(&id) {
+    if SAVE_FORMATS.contains(&ext) {
         let cmd = if as_copy { "file.saveCopy" } else { "document.save" };
         s.execute(cmd, &json!({"path": path}))?;
     } else {
-        s.execute("document.export", &json!({"path": path, "format": id}))?;
+        s.execute("document.export", &json!({"path": path, "format": ext}))?;
     }
     Ok(())
 }

@@ -8,8 +8,8 @@ before it starts. One JSON request per line:
 `{"id": 1, "method": "ui.inspect", "params": {}}` → `{"id": 1, "ok": true, "result": {...}}` or `{"id":1,"ok":false,"error":"..."}`.
 
 Set `CLERDOVECTOR_CONFIG_DIR` to a dedicated directory for an isolated native test profile. Preferences,
-logs, recovery and user libraries then use that root, without importing the legacy DrawCraft profile.
-An unset override preserves the usual platform paths and legacy migration; an explicitly empty override
+logs, recovery and user libraries then use that root.
+An unset override keeps the usual platform paths; an explicitly empty override
 disables those paths. `CLERDOVECTOR_NO_PREFS` continues to disable preference reads and writes.
 Without the override, a `portable.txt` or `ClerdoVector.portable` file beside the executable (as in the
 Windows portable zip) puts that root in `ClerdoVectorData` next to the executable; on macOS the marker
@@ -62,7 +62,7 @@ clerdovector --control 7979 --automation-read-root /work/project --automation-wr
 
 `--automation-read-root <dir>` and `--automation-write-root <dir>` (or `CLERDOVECTOR_AUTOMATION_READ_ROOT` /
 `CLERDOVECTOR_AUTOMATION_WRITE_ROOT`; `--flag=<dir>` works too) confine what the control channel reads and
-writes, with the same flags as `clerdovector-cli mcp` and the other Craft apps. Every path a request reads
+writes, with the same flags as `clerdovector-cli mcp`. Every path a request reads
 (open, place, relink, library and profile loads, plug-ins…) must lie inside a read root, every path it
 writes (save, export, package, captures, library saves…) inside a write root; anything else is an
 ordinary error reply. Paths are made absolute against the app's working directory, links are followed
@@ -950,18 +950,3 @@ app:
 
 Errors reject with an `Error` carrying the method's message. Requests run on the UI's next frame, so a
 hidden tab (whose frames the browser pauses) answers when it is shown again.
-
-## Revision history
-
-| Date | Change | Summary |
-|---|---|---|
-| 2026-10-31 | minor | Confining file access: on Windows a `:` in a name after the drive (an NTFS alternate data stream) is refused with the device names (#3604). |
-| 2026-10-25 | minor | Panel docking on craft-ui's layout: `ui.docking`, the floating and dock parameters, native floating windows. |
-| 2026-10-24 | minor | Documented the brush library panel commands (`window.brushLibrary`, `.other`, `ui.saveBrushLibrary`, `window.userBrushLibrary1`…`10`). |
-| 2026-10-24 | minor | Documented `ui.screenshot`'s 64 MiB inline-PNG reply cap: with `path` the file is still written and `pngBase64` is omitted when over the cap; a path-less `data: true` request fails before encoding. |
-| 2026-10-25 | minor | Documented that Object → Expand… is dimmed, and `ui.expandDialog` refuses, while the selection has an appearance Expand Appearance expands (`object.expand.info`'s `appearance`, #3089). |
-| 2026-10-25 | minor | Documented that Transform Each opens on the values it was last confirmed with and that its Copy button confirms with `copy: true` (#1732). |
-| 2026-10-23 | minor | Documented the symbol library panel commands (`window.symbolLibrary`, `.other`, `ui.saveSymbolLibrary`, `window.userSymbolLibrary1`…`10`). |
-| 2026-10-13 | minor | Documented count, pending-event and per-frame request budgets (#1709). |
-| 2026-10-13 | minor | Documented transport deadlines and connection-slot recovery (#1726). |
-| 2026-10-18 | minor | Documented `window.clerdovector`, the web build's control channel. |

@@ -48,9 +48,9 @@ for swatches and styles. Save never writes back over the Affinity file.
 ## Provenance and clean-room
 
 Affinity has no published file-format specification, so this reader is built only from a public
-description of the format and from public files, never from Affinity itself. This is how the sibling app PhotoCraft already treats formats that
+description of the format and from public files, never from Affinity itself. The same approach works for other formats that
 are only partly documented:
-its PSD reader fills the gaps in Adobe's specification from the MIT-licensed psd-tools and
+a PSD reader fills the gaps in Adobe's specification from the MIT-licensed psd-tools and
 ag-psd, and its camera raw decoder recovered Nikon's compression tables by black-box analysis
 of CC0 sample files.
 
@@ -81,11 +81,8 @@ of CC0 sample files.
 * **Read-only.** Nothing is written in Affinity's format; export waits until someone can check
   written files in Affinity itself.
 
-The reader also has independent copies in PhotoCraft's `photocraft-affinity` and DesignCraft's
-`designcraft-affinity`. Tables, paragraph formats, text scale, master pages, layer effects,
-overlays, embedded documents, large pixel layers and HEIC photos were added in DesignCraft
-([storytold/designcraft#291](https://github.com/storytold/designcraft/pull/291)) and brought back
-here, from the same public fixtures and the thumbnails of documents their owners made, used only
+Tables, paragraph formats, text scale, master pages, layer effects, overlays, embedded documents,
+large pixel layers and HEIC photos were added from the same public fixtures and the thumbnails of documents their owners made, used only
 locally. Automatic leading (the font size plus the font's line gap, for artistic and frame text)
 was fitted on the thumbnails of one such local document with 56 artboards and on the public Patchy
 text-frame fixture.

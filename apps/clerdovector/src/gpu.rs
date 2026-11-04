@@ -14,7 +14,7 @@
 //! all hang off the discrete GPU, power saving picked the Ryzen's integrated GPU, Windows had to
 //! present every frame across adapters, and the integrated GPU's driver reset under that, which
 //! lost the graphics device, or took the desktop's compositor and every monitor down for minutes
-//! (pdfcraft#378). So, when Preferences say Automatic, the GPU that drives the display the user
+//!. So, when Preferences say Automatic, the GPU that drives the display the user
 //! looks at comes first, and the power preference only orders the rest. Windows says which adapter
 //! drives which display (`EnumDisplayDevices`), Linux through sysfs; elsewhere, or when nothing
 //! matches, the order is the power preference's as before. Power Saving and High Performance,
@@ -129,7 +129,7 @@ pub fn preferred_compositor(pref: Option<&str>, env: Option<PowerPreference>) ->
 /// only when `opengl` ([`windows_opengl`]), unless `WGPU_BACKEND` names others (`env_set`;
 /// `default` then holds them). Creating a Vulkan instance loads every installed Vulkan driver into
 /// the process, and a faulty one (Intel's `igvk64.dll`, #806) crashed the app before its window
-/// appeared. DX12 is Windows' own backend, as in PdfCraft. Elsewhere, `default`.
+/// appeared. DX12 is Windows' own backend. Elsewhere, `default`.
 pub fn backends(default: Backends, env_set: bool, opengl: bool) -> Backends {
     match (cfg!(windows) && !env_set, opengl) {
         (true, true) => Backends::DX12 | Backends::GL,

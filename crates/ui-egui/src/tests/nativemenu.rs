@@ -181,7 +181,7 @@ fn every_in_window_item_is_in_the_mac_menu_bar_once() {
         assert_eq!(m, want, "{key:?} is listed {m} times on the Mac, {n} in the window");
     }
     let system = [native_menu::HIDE, native_menu::HIDE_OTHERS, native_menu::MINIMIZE];
-    // Language and Appearance have no in-window menu (synthesized in the App menu, as in PhotoCraft).
+    // Language and Appearance have no in-window menu (synthesized in the App menu).
     let synthesized = ["app.language", "window.brightness"];
     for key in b.keys() {
         assert!(a.contains_key(key) || system.contains(&key.0.as_str()) || synthesized.contains(&key.0.as_str()), "{key:?} isn't an in-window item");

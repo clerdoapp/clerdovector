@@ -7,7 +7,6 @@
     <comment>ClerdoVector document</comment>
     <icon name="app.clerdo.clerdovector"/>
     <glob pattern="*.clerdovector"/>
-    <glob pattern="*.drawcraft"/>
   </mime-type>
   <mime-type type="application/x-clerdovector-template">
     <comment>ClerdoVector template</comment>

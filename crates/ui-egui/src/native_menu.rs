@@ -8,7 +8,7 @@
 //!   page (General… ⌘K first); Language; Appearance (the UI brightness); Services; Hide ClerdoVector
 //!   ⌃⌘H (⌘H stays View › Hide Edges), Hide Others ⌥⌘H, Show All; and Quit ⌘Q, still the app's own
 //!   `app.quit`, so documents with unsaved changes are asked about. Language and Appearance have
-//!   no in-window menu (as in PhotoCraft) and are synthesized here; Quit is File › Exit in the
+//!   no in-window menu and are synthesized here; Quit is File › Exit in the
 //!   window and reads as Quit in the App menu. These leave the other menus (Edit › Preferences…,
 //!   Help › About), and Join Our Discord stays under Help only;
 //! - **Window** gets Minimize ⌃⌘M, Zoom and Bring All to Front, and **Help** the system's search
@@ -295,7 +295,7 @@ pub struct Layout {
 }
 
 /// The Mac menu bar of `bar` (the in-window menus, [`from_tree`]): see the module docs.
-/// Language and Appearance have no in-window menu (as in PhotoCraft); when the tree doesn't
+/// Language and Appearance have no in-window menu; when the tree doesn't
 /// carry them they are synthesized below, so the App menu keeps them.
 pub fn mac_layout(app: &ClerdovectorApp, bar: &MenuBar, lang: Lang) -> Layout {
     let mut bar = bar.clone();

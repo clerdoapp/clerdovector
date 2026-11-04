@@ -49,7 +49,7 @@ fn main() {
             Err(e) => println!("cargo::warning=web build fetches no craft fonts: web-fonts.txt: {e}"),
         }
     }
-    let src = format!("pub static CRAFT_FONTS: &[CraftFont] = &[\n{fonts}];\npub static WEB_FONTS: &[WebFont] = &[\n{web}];\n");
+    let src = format!("pub static CRAFT_FONTS: &[ClerdoFont] = &[\n{fonts}];\npub static WEB_FONTS: &[WebFont] = &[\n{web}];\n");
     let out = PathBuf::from(std::env::var_os("OUT_DIR").unwrap_or_default()).join("craft_fonts.rs");
     // Unchanged output keeps its mtime. Rewritten just before this crate compiles, it can read as
     // newer than that compile where cargo's recorded times lose their sub-second part (ecryptfs
@@ -75,7 +75,7 @@ fn from_workspace(dir: PathBuf) -> PathBuf {
 /// The one craft-fonts face web builds embed (family, style).
 const WEB_FONT: (&str, &str) = ("BIZ UDPGothic", "Regular");
 
-/// One `CraftFont { .. }` initialiser per manifest line.
+/// One `ClerdoFont { .. }` initialiser per manifest line.
 fn craft_fonts(dir: &Path) -> Result<String, String> {
     let manifest = dir.join("fonts/manifest.txt");
     println!("cargo::rerun-if-changed={}", manifest.display());
@@ -95,7 +95,7 @@ fn craft_fonts(dir: &Path) -> Result<String, String> {
         let scripts: Vec<String> = scripts.split(',').map(|s| format!("{:?}", s.trim())).collect();
         let _ = writeln!(
             out,
-            "    CraftFont {{ family: {family:?}, style: {style:?}, scripts: &[{}], bytes: include_bytes!({:?}) }},",
+            "    ClerdoFont {{ family: {family:?}, style: {style:?}, scripts: &[{}], bytes: include_bytes!({:?}) }},",
             scripts.join(", "),
             path.display().to_string(),
         );

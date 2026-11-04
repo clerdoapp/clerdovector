@@ -15,8 +15,7 @@
 # entries the same way. Product and technology names (ClerdoVector, Clerdo, SVG, OpenType, CMYK,
 # Lab ...) and paper sizes (Letter, Tabloid) stay in Latin letters; the trailing "…" of dialog
 # commands is kept. Full-width punctuation (，。：) inside sentences; half-width parentheses and
-# the " · " separators as in the English. Terms shared with PhotoCraft use the same words as its
-# zh-hant catalog (圖層, 選取, 偏好設定, 混合模式 ...), so the two apps read alike.
+# the " · " separators as in the English. Common terms: 圖層, 選取, 偏好設定, 混合模式 ...
 	Glowing Edges…	發光邊緣…
 	Glowing Edges	發光邊緣
 	Edge Width	邊緣寬度

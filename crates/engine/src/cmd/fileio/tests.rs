@@ -58,8 +58,7 @@ fn opens_every_readable_format() {
     let svgz = clerdovector_svg::compress(&svg);
 
     for (name, bytes, format) in [
-        ("a.clerdovector", native.clone(), "clerdovector"),
-        ("a.drawcraft", native, "clerdovector"),
+        ("a.clerdovector", native, "clerdovector"),
         ("a.svg", svg.into_bytes(), "svg"),
         ("a.svgz", svgz, "svgz"),
         ("a.pdf", pdf.clone(), "pdf"),

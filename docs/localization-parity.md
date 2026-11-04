@@ -91,28 +91,3 @@ translated.
 
 Locale-aware number and date formats, a right-to-left interface, translated help, and a Traditional Chinese UI
 font for the web build.
-
-## Revision history
-
-| Date | Change | Summary |
-|---|---|---|
-| 2026-10-30 | minor | Bosnian (`bs`, Latin, Ijekavian): complete catalog of 5,841 rows, every `bs-*` locale, one/few/other plurals; AI-assisted, not yet native-reviewed |
-| 2026-10-29 | minor | Vietnamese text: letters with two marks (Ể, Ứ, Ự) attach in precomposed, decomposed and keyboard forms, and a font lacking the marks falls back for the whole letter (#4491); scores unchanged |
-| 2026-10-28 | minor | Catalan (`ca`): complete catalog under the tests (menus, literals, messages; one/other plurals); every `ca-*` locale resolves here; AI-drafted, native review welcome. Added the Turkish and Indonesian rows the table was missing. Scores and estimates unchanged |
-| 2026-10-23 | patch | A missing translation never fails a test or a build; one untranslated report, printed by `cargo xtask ci` and `cargo xtask i18n-report`, lists the missing strings per language; scores unchanged |
-| 2026-10-16 | minor | Bulgarian (`bg`, #1909) and Greek (`el`, #2076) catalogs added, complete under the tests; Swedish (#2139) and Finnish (#1994) rows for strings added since; eighteen non-English catalogs |
-| 2026-10-16 | minor | Finnish (`fi`) catalog added, complete under the tests (menus, literals, messages; one/other plurals); AI-assisted, native proofreading pending |
-| 2026-10-15 | minor | Swedish (`sv`) catalog added, complete under the tests (menus, literals, messages; one/other plurals); every `sv-*` locale resolves to it; AI-drafted, native review welcome; scores and estimates unchanged |
-| 2026-10-14 | minor | Brazilian Portuguese (`pt-br`, #1914): catalog completed under the tests (menus, literals, messages); 12-language score 71% → 74%, hours 55–90 → 50–85 |
-| 2026-10-13 | minor | The Polish translator confirmed the Polish rows the maintainers had added after the catalog was written (#1614); Tool flyouts are as wide as their longest translated name and shortcut need, so names no longer run into shortcuts in Spanish and other languages (#1650, fixes #1616); scores and estimates unchanged |
-| 2026-10-13 | minor | Polish (`pl`, #1498): the row count is corrected to the 4,510 rows in `pl.tsv` (it said 4,492), 654 of them `@msg` rows; AI-drafted, native review pending; scores and estimates unchanged |
-| 2026-10-13 | minor | French: the 423 strings added since the catalog was last complete are translated, and 188 entries are reworded to the feature names French users know (#1511); Hungarian: one message uses the informal address like the rest of the interface (#1474); the entry counts in the tables are the earlier measurements; native review still pending; scores and estimates unchanged |
-| 2026-10-12 | minor | Vietnamese (`vi`) catalog added, complete under the tests (menus, literals, messages; one plural form); 12-language score 63% → 71%, hours 60–100 → 55–90 |
-| 2026-10-13 | minor | Czech: 128 more strings translated (tool names, PDF and Image Trace presets, pie graph options and others added since the catalog was completed; #1461); the entry count in the table is the 2026-10-11 measurement; native review still pending; scores and estimates unchanged |
-)
-| 2026-10-12 | minor | Korean (`ko`) catalog added, complete under the tests (menus, literals, messages); 12-language score 54% → 63%, hours 70–110 → 60–100 |
-| 2026-10-12 | minor | Polish (`pl`) catalog added, complete under the tests (menus, literals, messages; one/few/many plurals) |
-| 2026-10-12 | minor | Hungarian (`hu`) catalog added, complete under the tests |
-| 2026-10-12 | minor | Georgian (`ka`) catalog, complete |
-| 2026-10-11 | minor | Czech render-site follow-up: file-dialog filters, diagnostics, preset numbering, contributor tooltips/plurals, gradient grammar and contextual printer mark styles; estimates unchanged |
-| 2026-10-10 | major | First per-language table, measured from the catalog row counts against the complete French catalog |

@@ -253,7 +253,7 @@ fn main() -> std::process::ExitCode {
     #[cfg(feature = "wgpu")]
     let power = gpu::power_preference(gpu_pref, power_env);
     // Automatic draws on the GPU that drives the (primary) display: a GPU without a monitor reset
-    // its driver and took every monitor down (pdfcraft#378). Logged first: the first question in
+    // its driver and took every monitor down. Logged first: the first question in
     // every black-window report.
     #[cfg(feature = "wgpu")]
     let displays = gpu::preferred_displays(gpu_pref, power_env);

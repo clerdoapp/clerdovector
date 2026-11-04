@@ -138,7 +138,7 @@ mod tests {
     fn reads_variants_in_order_and_entries_with_their_designer_flags() {
         let v: Vec<String> = variants(ENUM).into_iter().map(|v| v.name).collect();
         assert_eq!(v, ["Arrow", "RotateToward", "Pen"]);
-        let m = format!("app = \"TestCraft\"\n\n{}[[cursor]]\nid = \"Pen\"\ndesigner = false\n", entry("Arrow"));
+        let m = format!("app = \"TestApp\"\n\n{}[[cursor]]\nid = \"Pen\"\ndesigner = false\n", entry("Arrow"));
         let e: Vec<(Option<String>, bool)> = entries(&m).into_iter().map(|e| (e.id, e.designer)).collect();
         assert_eq!(e, [(Some("Arrow".into()), true), (Some("Pen".into()), false)]);
     }

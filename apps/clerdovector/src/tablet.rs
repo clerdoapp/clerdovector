@@ -22,8 +22,7 @@
 //! The reader starts only for a window on X11. On native Wayland, `DISPLAY` names an XWayland
 //! that receives none of the window's input.
 //!
-//! The mapping and the reader come from PhotoCraft's `crates/tablet` (`xi.rs` and `x11.rs`), with
-//! the pressure axis only.
+//! The mapping and the reader keep the pressure axis only.
 #![cfg_attr(not(target_os = "linux"), allow(dead_code))]
 
 use std::collections::HashMap;

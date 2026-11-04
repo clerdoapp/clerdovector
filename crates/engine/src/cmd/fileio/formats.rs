@@ -345,7 +345,7 @@ pub const FORMATS: &[Format] = &[
     Format {
         id: "clerdovector",
         label: "ClerdoVector",
-        extensions: &[clerdovector_format::EXTENSION, clerdovector_format::LEGACY_EXTENSION],
+        extensions: &[clerdovector_format::EXTENSION],
         mime: "application/json",
         read: true,
         write: true,
@@ -498,7 +498,6 @@ pub const FORMATS: &[Format] = &[
 /// Every extension `document.open` reads (the "All readable files" filter of open dialogs).
 pub const OPEN_EXTS: &[&str] = &[
     "clerdovector",
-    "drawcraft",
     "svg",
     "svgz",
     "pdf",
@@ -576,7 +575,6 @@ const WORD_EXTS: &[&str] = &["docx", "doc"];
 /// [`DOCX_EXTS`] and [`DOC_EXTS`].
 pub const PLACE_EXTS: &[&str] = &[
     "clerdovector",
-    "drawcraft",
     "svg",
     "svgz",
     "pdf",

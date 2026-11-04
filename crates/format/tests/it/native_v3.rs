@@ -99,9 +99,9 @@ fn compressed_files_load() {
     assert_eq!(doc_json(&load(&packed).unwrap()), doc_json(&load(&plain).unwrap()));
     // Compressed files are compact even when pretty was asked for.
     assert!(!flate2_unpack(&packed).contains(&b'\n'));
-    // A legacy (v2, pre-rename) file compressed by hand opens too.
+    // An older (v2) file compressed by hand opens too.
     let text = String::from_utf8(plain.clone()).unwrap();
-    let legacy = text.replacen(&format!("\"format\":\"clerdovector\",\"version\":{VERSION}"), "\"format\":\"drawcraft\",\"version\":2", 1);
+    let legacy = text.replacen(&format!("\"format\":\"clerdovector\",\"version\":{VERSION}"), "\"format\":\"clerdovector\",\"version\":2", 1);
     assert_ne!(legacy, text);
     let legacy = gzip(legacy.as_bytes());
     assert!(sniff(&legacy));
@@ -194,8 +194,8 @@ fn text_composer_round_trips() {
     assert!(!String::from_utf8_lossy(&save(&d2, false)).contains("composer"));
 }
 
-/// A document as the first version wrote it (format name `drawcraft`, anchors as maps).
-const V1_FILE: &str = r#"{"format":"drawcraft","version":1,"generator":"DrawCraft 0.1.0","document":{"version":1,"title":"Old","artboards":[{"id":1,"name":"Artboard 1","rect":{"x0":0.0,"y0":0.0,"x1":100.0,"y1":80.0}}],
+/// A document as the first version wrote it (anchors as maps).
+const V1_FILE: &str = r#"{"format":"clerdovector","version":1,"generator":"ClerdoVector 0.1.0","document":{"version":1,"title":"Old","artboards":[{"id":1,"name":"Artboard 1","rect":{"x0":0.0,"y0":0.0,"x1":100.0,"y1":80.0}}],
 "layers":[{"id":1,"name":"Layer 1","visible":true,"locked":false,"opacity":1.0,"kind":{"type":"layer","children":[
 {"id":2,"visible":true,"locked":false,"opacity":1.0,"kind":{"type":"path","path":{"subpaths":[{"anchors":[
 {"p":{"x":10.0,"y":10.0},"in":{"x":10.0,"y":10.0},"out":{"x":30.0,"y":0.0},"kind":"Smooth"},
@@ -222,7 +222,7 @@ fn saves_down_to_older_versions() {
     for version in [1, 2] {
         let bytes = save_with(&d, &opts(version, false)).unwrap();
         let v = json_of(&bytes);
-        assert_eq!((v["format"].as_str(), v["version"].as_u64()), (Some("drawcraft"), Some(version as u64)), "older apps know the old name");
+        assert_eq!((v["format"].as_str(), v["version"].as_u64()), (Some("clerdovector"), Some(version as u64)));
         // Profiles where those versions keep them.
         assert_eq!(v["document"]["unknown"]["colorProfiles"], json!({"rgb": null, "cmyk": "Coated"}));
         assert!(v["document"].get("color_profiles").is_none());

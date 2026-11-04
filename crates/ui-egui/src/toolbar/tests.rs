@@ -258,7 +258,7 @@ fn polygon_and_star_canvas_counts_persist_without_new_toolbar_dialogs() {
         let mut app = ClerdovectorApp::new(Session::new(), Default::default());
         app.run("file.new", json!({"width":300,"height":300})).unwrap();
         app.select_tool(tool);
-        assert!(open_options(&mut app, tool).is_err(), "upstream toolbar opening behavior stays unchanged");
+        assert!(open_options(&mut app, tool).is_err(), "the toolbar opening behavior stays unchanged");
         assert!(app.ui.dialog.is_none());
         let objects =
             |app: &ClerdovectorApp| app.session.active().unwrap().doc.layers.iter().map(|l| l.children().map_or(0, |c| c.len())).sum::<usize>();

@@ -138,7 +138,7 @@ fn legacy_ai_saves_the_artboards_checked_in_its_picker() {
     app.ui.dialog.as_mut().unwrap().fields.insert("aiVersion".into(), json!("7"));
     frame(&mut app, false);
     assert_eq!(dialog(&app).fields["boards"], json!([true, true, true, true]), "every artboard to start with");
-    if let Some(dir) = std::env::var_os("CRAFT_UI_SAVE_OPTIONS_SHOT") {
+    if let Some(dir) = std::env::var_os("CLERDO_UI_SAVE_OPTIONS_SHOT") {
         let mut ready = false;
         let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(900.0, 760.0)).wgpu().build_ui_state(
             move |ui, app: &mut ClerdovectorApp| {

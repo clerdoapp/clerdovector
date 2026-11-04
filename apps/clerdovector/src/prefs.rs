@@ -3,13 +3,7 @@ use super::{ClerdovectorApp, fileio, prefs_dir};
 /// Where UI preferences live: ~/Library/Application Support/ClerdoVector (macOS),
 /// %APPDATA%\ClerdoVector (Windows), $XDG_CONFIG_HOME or ~/.config/clerdovector (Linux).
 pub(crate) fn prefs_path() -> Option<std::path::PathBuf> {
-    prefs_dir::prefs_path_for("ClerdoVector", "clerdovector")
-}
-
-/// The same place under the project's former name (DrawCraft): read once if there are no
-/// ClerdoVector preferences yet, so settings survive the rename.
-fn legacy_prefs_path() -> Option<std::path::PathBuf> {
-    prefs_dir::prefs_path_for("DrawCraft", "drawcraft")
+    prefs_dir::prefs_path()
 }
 
 /// Where the log files live: `logs` in the preferences folder (see `logging`).
@@ -41,8 +35,7 @@ pub(crate) fn read_prefs() -> Option<clerdovector_ui_egui::UiState> {
         }
         return read.map(|read| read.ui);
     }
-    let bytes = legacy_prefs_path().and_then(|p| std::fs::read(p).ok())?;
-    decode_saved_prefs(&bytes)
+    None
 }
 
 /// Saved preferences, with what this version cannot read of their docking data dropped and

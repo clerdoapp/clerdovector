@@ -15,7 +15,6 @@ What Image Trace (`crates/trace`) makes of images whose right answer is known, m
 compared with the numbers before each change. Nothing here is a judgement by eye, and nothing is compared
 with any other product except the open tracer named under [Yardstick](#4-yardstick).
 
-
 ## Auto Color keeps rare colours
 
 The Automatic palette (Auto Color) counts flat art's colours by area: a colour needs about 1% of the
@@ -54,7 +53,6 @@ the input 0.138 (was 0.348); paths 2547 → 2586, anchors 27,204 → 24,896, tra
 all. On four public-domain scan crops (1024 × 1024) Auto Color takes the continuous-tone route and
 nothing changes: 14, 72, 199 and 98 colours, the same paths, anchors and rendered error (2.11, 5.66,
 9.15 and 1.00 ΔE00), time within run-to-run spread.
-
 
 ## Large images
 Images over 1500 px on a side are traced with a warning that they trace more slowly (Flat Logo names
@@ -1272,39 +1270,3 @@ of those, with unchanged path counts (one-pixel lines: 93 aa / 92 hard; circles:
 The graph stage does not reconnect separate blobs. Raw graph tests cover straight lines at 24
 angles, junctions and 20–90° crossings; these do not replace the emitted-path measurements above.
 The remaining spur/extra-junction target is not met by this graph-only change.
-
-## Revision history
-
-| date | change |
-|:--|:--|
-| 2026-10-17 | Auto Color keeps rare but distinct colours (stems, highlights, near-white on pale backgrounds): 66 of 66 flat test logos keep every key colour (was 39); scans unchanged |
-| 2026-10-17 | Images over 1500 px on a side trace with a warning; the anchor limit is 8,000,000 (2,000,000 on the web); time and memory of 2000 × 2000 to 6000 × 4000 code-drawn photos |
-| 2026-10-17 | `Raster::new` returns an error for RGBA bytes of the wrong length (it failed an assertion) and `Raster::pixel` reads nothing past the raster; traces of valid images unchanged |
-| 2026-10-17 | M12: maximal-disc graph pruning, split-crossing merges and degree-two joins; correct junction degrees 30→44/45 aa and hard, none missed; remaining spurs unchanged. Centre-lines rerun, scores and earlier tables unchanged. |
-| 2026-10-17 | M12: exact per-blob Euclidean distances and Guo–Hall thinning; centre-lines rerun on 46 inputs. Ends found: aa 638→682/688, hard 631→681/688. Whole-blob stroke/fill choice retained; preset/cost tables unchanged. |
-| 2026-10-17 | M12: add the ignored centre-lines class and measure the existing Create Strokes output on 23 code-drawn scenes, aa and hard; centre/width/topology/end/coverage metrics, no new images, dependencies or behaviour |
-| 2026-10-16 | Image Trace: a loop or junction-returning piece whose fit collapsed to one cubic keeps the fewest segments that hold its area and course instead of every positioned point, so a higher Paths no longer gives fewer segments on code-drawn noisy images (six falling runs to none; one other cause remains). |
-| 2026-10-16 | Image Trace: a notch corner is cut only when the straight edges beside it lie in the shared piece, so both regions of the piece get the same points (code-drawn noisy colour images: 93 uncovered sample points to 0). |
-| 2026-10-16 | Image Trace: a crack's sub-pixel shift is the mean of the readings from its two sides, exactly antisymmetric, so abutting regions get the same points on thin slivers (a code-drawn noisy ripple went from 482–1,228 uncovered sample points per trace to 0). |
-| 2026-10-16 | Image Trace: the contour walk works out each turn from the pixels as it goes instead of following a precomputed table of per-corner directions; identical loops on all 65,536 4 × 4 masks and 400 seeded masks, and no slower (whole 1 MP traces 1–5% faster). |
-| 2026-10-14 | Closed fitting retains the positioned boundary when straightening collapses a nonzero-area loop; four generated regressions; preset scores unchanged |
-| 2026-10-14 | Tiny closed fits retain their positioned outlines instead of losing islands/holes; three generated regression tests; quality-harness baseline unchanged |
-| 2026-10-14 | Gradients: a gradient that noise or a soft rim broke into pieces is found in its largest piece and grown over the rest (blurred and noisy linear gradients: 3 to 11 paths beside the gradient down to 0.5 with 6 Colors, 24 to 56 down to 0.5 to 1.5 with High Fidelity Photo) |
-| 2026-10-14 | Enhanced versions of the presets (Auto Grouping, and Shapes in all but High Fidelity Photo; Flat Logo has none), each measured beside its preset; a hole that one colour fills is the same shape as what fills it, rectangles are sized by where their sides lie, and a group keeps its paths in the order they were traced in (grouped, a letter with a counter was painted with a light seam: Default with Auto Grouping, edge ΔE 10.24 to 9.88) |
-| 2026-10-14 | Create: Strokes: a line whose ink is cut square at its ends gets square caps, and a wide line whose skeleton hooks towards a corner of its end ends on the line it was following (Outline: largest distance 2.94 px to 0.88; aliased lines 0.88 to 0.81) |
-| 2026-10-13 | Shapes: corners that anti-aliasing or blur took a little off are corners, a rounded rectangle gets the radius that fits, a polygon its sides from the outline itself, hard-edged outlines a little more room (plain shapes found: 57 to 62% up to 98 to 100%); a "false shapes" column |
-| 2026-10-13 | Flat Logo: the tones a scan's uneven paper makes of one colour are one colour (scans: 470 paths and 21 px off to 8.5 paths and 0.09 px) |
-| 2026-10-13 | Snap Curves To Lines moves no end of a line by more than 1.6 px: long lines a degree or two off stay as the image has them (Technical Drawing: largest distance 4.21 px to 1.46) |
-| 2026-10-13 | Gradients (off unless asked for): areas that are a linear gradient are found before the palette is made and traced as one path with a gradient fill; linear-gradient inputs with known lines and stops, and four columns for them |
-| 2026-10-13 | Auto Grouping (off unless asked for): each path that has others inside it is grouped with them; a "grouped %" column, and three presets measured with the option on |
-| 2026-10-13 | Shapes (off unless asked for): filled outlines that are a circle, an ellipse, a rectangle or a regular polygon come out as that shape; corners whose pixel is mostly outside the shape are corners; plain-shape inputs and a "shapes %" column |
-| 2026-10-13 | Create: Strokes: centre lines placed in the middle of their ink and as wide as it, fitted as outlines are; centre-line distance, width error and anchors per stroke measured against the thin lines' truth |
-| 2026-10-13 | Snap Curves To Lines levels lines within 2.5 degrees of level or upright; askew inputs and an "upright %" column, so the baseline was measured again with them (the tracer of main at `baf9693f`) |
-| 2026-10-13 | Ignore Color; the Auto Color and Outline presets, measured from here on (Outline is the first measure of Create: Strokes) |
-| 2026-10-13 | Thin lines: black and white read against the image's darkest black and the paper near each edge |
-| 2026-10-13 | Memory: layers traced within the box of their pixels and a few at a time (16 megapixel photo: 3.9 GB to 0.9 GB) |
-| 2026-10-13 | Shared edges: outlines are cut at their junctions and each piece is fitted once, the same from either side |
-| 2026-10-13 | Photos: continuous-tone images are smoothed within their tones before quantising, and stacked layers go by lightness |
-| 2026-10-13 | The palette: made of the picture's own colours, noise-made colours merged, blend pixels settled, cuts where colours differ most, colours compared in Oklab |
-| 2026-10-13 | Sub-pixel edges and the outline fitter in Black and White, Grayscale and Color; the harness gains an aliased variant and an "outside px" column, so the baseline was measured again with it (same tracer, main at `baf9693f`) |
-| 2026-10-12 | The harness and the baseline: every preset measured before any change to the tracer |

@@ -201,7 +201,6 @@ fn the_macos_bundle_opens_every_readable_format() {
 /// declares.
 const LINUX_TYPES: &[(&str, &str)] = &[
     ("clerdovector", "application/x-clerdovector"),
-    ("drawcraft", "application/x-clerdovector"),
     ("svg", "image/svg+xml"),
     ("svgz", "image/svg+xml-compressed"),
     ("pdf", "application/pdf"),

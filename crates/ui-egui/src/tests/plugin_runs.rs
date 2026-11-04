@@ -173,12 +173,12 @@ fn continue_in_background_hides_the_progress_window() {
     assert_eq!(app.ui.status, clerdovector_engine::EngineError::Cancelled.to_string());
 }
 
-/// `CRAFT_UI_HEAVY_FILTER_WASM=<folder>` writes a heavy test filter to install in the app
+/// `CLERDO_UI_HEAVY_FILTER_WASM=<folder>` writes a heavy test filter to install in the app
 /// (`order-paths-test-filter.wasm`): it computes until it is cancelled or its budget runs out, so
 /// its progress window stays up for a picture.
 #[test]
 fn heavy_test_filter_for_pictures() {
-    let Some(dir) = std::env::var_os("CRAFT_UI_HEAVY_FILTER_WASM") else { return };
+    let Some(dir) = std::env::var_os("CLERDO_UI_HEAVY_FILTER_WASM") else { return };
     let manifest = r#"{"id":"org.example.order","name":"Order Paths for Plotting (test plug-in)","version":"1","kind":"filter",
         "budget":"heavy","description":"Orders the selected paths so the pen travels as little as possible between them.",
         "params":{"passes":{"type":"int","min":1,"max":100,"default":20,"label":"Improvement passes"},

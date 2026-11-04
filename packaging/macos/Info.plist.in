@@ -148,7 +148,7 @@
     </dict>
   </array>
 
-  <!-- ClerdoVector's own format (.drawcraft is its name from before the rename). -->
+  <!-- ClerdoVector's own format. -->
   <key>UTExportedTypeDeclarations</key>
   <array>
     <dict>
@@ -166,7 +166,7 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.filename-extension</key>
-        <array><string>clerdovector</string><string>drawcraft</string></array>
+        <array><string>clerdovector</string></array>
         <key>public.mime-type</key>
         <array><string>application/x-clerdovector</string></array>
       </dict>

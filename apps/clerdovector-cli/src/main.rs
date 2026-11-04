@@ -221,7 +221,7 @@ fn mcp(args: &[String]) -> Result<(), String> {
     let (mut read_roots, mut write_roots): (Vec<String>, Vec<String>) = (vec![], vec![]);
     let mut it = args.iter();
     while let Some(a) = it.next() {
-        // The roots also come as `--flag=DIR`, as the other Craft apps take them.
+        // The roots also come as `--flag=DIR`.
         let (flag, inline) = match a.split_once('=') {
             Some((f, v)) if f.starts_with("--automation-") => (f, Some(v.to_string())),
             _ => (a.as_str(), None),

@@ -114,7 +114,7 @@ to the target triple, so host build scripts aren't affected.
   can never ship labelled arm64), that `clerdovector.exe` is a GUI program (no console window) and
   that `clerdovector-cli.exe` is a console program.
 - **Portable zip:** it ships `packaging/windows/portable.txt` beside `clerdovector.exe`. That
-  marker (or a `ClerdoVector.portable` file) switches on portable mode, as in PhotoCraft: `ui.json`
+  marker (or a `ClerdoVector.portable` file) switches on portable mode: `ui.json`
   and the folders next to it (Swatches, Graphic Styles, Fonts, Data Recovery, logs…) go to
   `ClerdoVectorData\` next to the exe instead of `%APPDATA%\ClerdoVector`. The first time
   `ClerdoVectorData` is created, the settings already in `%APPDATA%\ClerdoVector` are copied into it
@@ -122,7 +122,7 @@ to the target triple, so host build scripts aren't affected.
   settings. If that folder isn't writable the app logs a warning and uses `%APPDATA%`. Deleting
   `portable.txt` returns settings to the user profile (the `ClerdoVectorData` folder is left as it
   is). The MSI has no marker. `CLERDOVECTOR_CONFIG_DIR` still wins, `CLERDOVECTOR_NO_PREFS` never
-  looks for the marker, and a portable copy skips the one-time read of the old DrawCraft settings.
+  looks for the marker.
   The logic is in `apps/clerdovector/src/profile.rs`. On the other platforms the marker goes where
   the user sees the app, never inside it: on macOS next to `ClerdoVector.app` (nothing is written
   inside the signed bundle), for an AppImage next to the `.AppImage` file (`$APPIMAGE`; the mounted
@@ -198,7 +198,7 @@ against riscv64 libraries from ports.ubuntu.com (so the floor there is glibc 2.3
 `EMULATOR=qemu-riscv64` set: a `.tar.gz` only, with `clerdovector-cli --version` run under QEMU.
 
 **AppImage updates.** Each AppImage embeds the update information
-`gh-releases-zsync|storytold|clerdovector|latest|clerdovector-*-linux-<arch>.AppImage.zsync`
+`gh-releases-zsync|clerdoapp|clerdovector|latest|clerdovector-*-linux-<arch>.AppImage.zsync`
 (appimagetool `-u`), and `package.sh` writes the matching `.zsync` beside it when `zsyncmake` (the
 `zsync` package) is installed. [AppImageUpdate](https://github.com/AppImageCommunity/AppImageUpdate)
 and AppImageLauncher then download only the changed blocks from the newest published,
@@ -247,11 +247,3 @@ warning, never a failed build.
 | `APPLE_ID`, `APPLE_PASSWORD`, `APPLE_TEAM_ID` | notarization (`APPLE_PASSWORD` is an app-specific password) |
 | `WINDOWS_CERTIFICATE`, `WINDOWS_CERTIFICATE_PASSWORD` | Windows signing with a `.pfx` |
 | `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_SIGNING_ENDPOINT`, `AZURE_SIGNING_ACCOUNT`, `AZURE_CERT_PROFILE` | Windows signing with Azure Trusted Signing |
-
-## Revision history
-
-| Date | Change | Summary |
-|---|---|---|
-| 2026-10-14 | minor | RPM glibc floor names libm's `GLIBC_2.35`: RHEL 9's glibc 2.34 provides libc's through backports |
-| 2026-10-12 | minor | RPM dependencies use 64-bit runtime capabilities and enforce glibc 2.35 (#1275); real distro install/start-up checks remain pending |
-| 2026-10-12 | minor | Portable mode (#1366): the Windows portable zip ships `portable.txt`; where the marker goes on macOS and Linux, and what Flatpak can't do |

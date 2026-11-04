@@ -184,10 +184,3 @@ out, perspective). No Adobe software, assets, presets or bevel shapes were used.
   unbuilt items.
 
 Release measurements and a repeatable CLI scene are in [3D lighting performance](3d-lighting-performance.md).
-
-## Revision history
-
-| Date | Change |
-|---|---|
-| 2026-10-21 | Four original lighting presets, shared by all four 3D effects and commands, with effective-setting recognition and existing preview/history behavior. |
-| 2026-10-17 | Smooth colored Inflate lighting and surface batching; legacy white-light appearance and the 0.05 seam minimum preserved; shared light Color and multiple lights remain vector output. |

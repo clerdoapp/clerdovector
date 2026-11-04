@@ -123,14 +123,14 @@ fn the_help_button_opens_the_parameter_s_page() {
     remove(&mut h, id);
 }
 
-/// `CRAFT_UI_PLUGIN_FIELDS_SHOT=<folder>` saves a picture of a dialog whose parameters use every
+/// `CLERDO_UI_PLUGIN_FIELDS_SHOT=<folder>` saves a picture of a dialog whose parameters use every
 /// presentation key there, and the test plug-in beside it (`hatch-test-filter.wasm`) to install in
 /// the app. Its parameter names are written as many plug-ins write them, in snake case, and it uses
 /// only the types every host reads, so a host from before the keys installs it too and shows it as
 /// it did.
 #[test]
 fn plugin_fields_picture() {
-    let Some(dir) = std::env::var_os("CRAFT_UI_PLUGIN_FIELDS_SHOT") else { return };
+    let Some(dir) = std::env::var_os("CLERDO_UI_PLUGIN_FIELDS_SHOT") else { return };
     let dir = std::path::PathBuf::from(dir);
     let manifest = r#"{"id":"org.example.hatch","name":"Hatch Fill (test plug-in)","version":"1","kind":"filter",
         "description":"Fills the selected shapes with lines.","params":{

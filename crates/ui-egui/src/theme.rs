@@ -172,7 +172,7 @@ pub struct Tokens {
 impl Tokens {
     pub fn for_brightness(b: Brightness) -> Self {
         let hex = |s: u32| Color32::from_rgb((s >> 16) as u8, (s >> 8) as u8, s as u8);
-        // The Craft look: cool slate greys, flat faces with soft corners, and one accent (the app
+        // The look: cool slate greys, flat faces with soft corners, and one accent (the app
         // icon's coral) for what is on, chosen or focused. The four brightness levels share the
         // style and differ only in their greys.
         let base = Tokens {
@@ -559,7 +559,7 @@ fn interface_faces(_fonts: &mut FontDefinitions) -> (Vec<&'static str>, Vec<&'st
 }
 
 /// The egui name of a craft-fonts face.
-pub(crate) fn craft_font_name(f: &clerdovector_text::CraftFont) -> String {
+pub(crate) fn craft_font_name(f: &clerdovector_text::ClerdoFont) -> String {
     format!("craft-fonts {} {}", f.family, f.style)
 }
 

@@ -67,13 +67,13 @@ fn an_exporter_with_parameters_asks_for_them_once_the_file_is_picked() {
     app.run("plugin.remove", json!({"id": "test.ui.params"})).unwrap();
 }
 
-/// `CRAFT_UI_PLUGIN_EXPORT_SHOT=<folder>` saves the pictures of the dialogs to that folder: Export As
+/// `CLERDO_UI_PLUGIN_EXPORT_SHOT=<folder>` saves the pictures of the dialogs to that folder: Export As
 /// with an exporter's format chosen, then the exporter's own dialog. The plug-in is a test one with
 /// parameters a plotter's exporter could have, saved beside them (`plotter-test-exporter.wasm`) to
 /// install in the app.
 #[test]
 fn export_as_and_exporter_dialog_pictures() {
-    let Some(dir) = std::env::var_os("CRAFT_UI_PLUGIN_EXPORT_SHOT") else { return };
+    let Some(dir) = std::env::var_os("CLERDO_UI_PLUGIN_EXPORT_SHOT") else { return };
     let dir = std::path::PathBuf::from(dir);
     let (mut app, _) = app(1);
     let params = r#"{"speed":{"type":"number","min":1,"max":100,"default":40},"passes":{"type":"int","min":1,"max":10,"default":1},

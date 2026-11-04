@@ -447,9 +447,8 @@ fn links_from_older_files_load_and_keep_their_pixels() {
     // As older versions saved a link: the path alone, the pixels embedded.
     let mut v: Value = serde_json::from_slice(&clerdovector_format::save(&s.doc().unwrap().doc, false)).unwrap();
     saved_image(&mut v)["link"] = json!(pic);
-    v["format"] = json!("drawcraft");
     let legacy = serde_json::to_vec(&v).unwrap();
-    let doc_path = dir.file("old.drawcraft");
+    let doc_path = dir.file("old.clerdovector");
     write(&doc_path, &legacy);
     let r = open(&mut s, &doc_path);
     assert_eq!((r["missingLinks"].clone(), r["modifiedLinks"].clone()), (json!([]), json!([])), "{r}");

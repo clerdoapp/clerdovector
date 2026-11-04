@@ -32,7 +32,7 @@ pub mod test_fonts;
 pub mod thread;
 
 pub use bitmap::GlyphImage;
-pub use craft_fonts::{CRAFT_FONTS, CraftFont, WEB_FONTS, WebFont};
+pub use craft_fonts::{CRAFT_FONTS, ClerdoFont, WEB_FONTS, WebFont};
 pub use features::{EXTRA_FEATURES, LIGATURE_TRACKING_LIMITS, OtFeatures, explicit_ligatures, ligatures_suppressed_by};
 pub use fontdb::{
     FALLBACK_FAMILY, FontClass, FontDb, FontFace, FontMatch, FontTraits, IcfMargins, PlatformFontFiles, WantedFont, WantedFonts, app_font_dir,

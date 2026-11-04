@@ -56,7 +56,7 @@ fn primary(pci: (u32, u32)) -> DisplayGpu {
     DisplayGpu { pci, primary: true }
 }
 
-/// The desktop of pdfcraft#378 as wgpu lists it on Windows: a Ryzen's integrated GPU without a
+/// A desktop as wgpu lists it on Windows: a Ryzen's integrated GPU without a
 /// monitor and an RTX 3090 driving both monitors, each under Vulkan and DX12, then WARP and
 /// OpenGL (which reports no device id).
 fn ryzen_desktop() -> Vec<Candidate> {
@@ -70,7 +70,7 @@ fn ryzen_desktop() -> Vec<Candidate> {
     ]
 }
 
-/// pdfcraft#378: power saving picked the integrated GPU, whose driver reset when Windows had to
+/// power saving picked the integrated GPU, whose driver reset when Windows had to
 /// present its frames on the monitors of the NVIDIA card. The GPU that drives the displays now
 /// comes first, through DX12 (#545); the integrated GPU stays the fallback a restart reaches.
 #[test]

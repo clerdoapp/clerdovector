@@ -67,9 +67,8 @@ fn reset_uses_the_requested_artboards_top_left_and_ignores_noops() {
 #[test]
 fn native_versions_and_compression_keep_the_origin_and_old_files_default_to_zero() {
     let mut s = session();
-    let legacy =
-        String::from_utf8(save(&s.doc().unwrap().doc, false)).unwrap().replacen("\"format\":\"clerdovector\"", "\"format\":\"drawcraft\"", 1);
-    assert!(serde_json::to_value(load(legacy.as_bytes()).unwrap()).unwrap().get("ruler_origin").is_none());
+    let fresh = save(&s.doc().unwrap().doc, false);
+    assert!(serde_json::to_value(load(&fresh).unwrap()).unwrap().get("ruler_origin").is_none());
     let p = json!({"x": -12.5, "y": 27.75});
     s.execute("document.setRulerOrigin", &p).unwrap();
     let doc = &s.doc().unwrap().doc;

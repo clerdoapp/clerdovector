@@ -15,7 +15,7 @@
     <Property Id="ARPHELPLINK" Value="https://discord.gg/CHu4QqrWtf" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
-      <Directory Id="CraftSuiteFolder" Name="Clerdo">
+      <Directory Id="ClerdoSuiteFolder" Name="Clerdo">
         <Directory Id="INSTALLFOLDER" Name="ClerdoVector" />
       </Directory>
     </StandardDirectory>

@@ -2,7 +2,7 @@
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms).
 #
 # Clean-room: every entry is written from the meaning of ClerdoVector's English label, following
-# the shared Georgian glossary of the Craft apps (commands as verbal nouns: შენახვა, გახსნა; no
+# one Georgian glossary (commands as verbal nouns: შენახვა, გახსნა; no
 # capitals, Georgian has none); no other application's Georgian localisation was consulted or
 # copied. Drafted with AI assistance (Claude); not yet reviewed by a native speaker.
 # Vocabulary: სამუშაო დაფა (artboard), ტრაექტორია (path), საყრდენი წერტილი (anchor point),

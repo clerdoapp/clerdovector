@@ -26,9 +26,8 @@
 //! compressed; v4 may keep large data (images, placed documents, the PDF, profiles of at least
 //! [`INLINE_MAX`] bytes) after the JSON instead of in it: the JSON is followed by [`BLOB_MAGIC`] and
 //! the bytes, and such an entry says where they are (`"blob": [offset, length]`) instead of giving
-//! `data`. Every version loads, and [`save_with`] writes any of them for older apps (under the
-//! format name `drawcraft`, which every version reads). Readers reject files whose `version` is
-//! newer than they support.
+//! `data`. Every version loads, and [`save_with`] writes any of them for older apps. Readers reject
+//! files whose `version` is newer than they support.
 #![forbid(unsafe_code)]
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -62,8 +61,6 @@ pub const COMPRESSED_SINCE: u32 = 3;
 /// Most pixels on the longer side of an embedded preview.
 pub const PREVIEW_MAX: u32 = 256;
 pub const EXTENSION: &str = "clerdovector";
-/// Extension and format name from before the project was renamed (DrawCraft): still opened.
-pub const LEGACY_EXTENSION: &str = "drawcraft";
 /// Most bytes the JSON of a compressed file may unpack to (a guard against decompression bombs,
 /// as are [`MAX_BLOB`] and [`MAX_BLOBS`]). A compressed save refuses a document past any of them,
 /// so every file ClerdoVector writes reads back. On wasm32 the cap is a quarter of the native
@@ -83,7 +80,7 @@ const MAX_UNPACKED: u64 = 512 << 20;
 
 /// Is `ext` (without the dot, any case) a native document extension?
 pub fn is_native_ext(ext: &str) -> bool {
-    ext.eq_ignore_ascii_case(EXTENSION) || ext.eq_ignore_ascii_case(LEGACY_EXTENSION)
+    ext.eq_ignore_ascii_case(EXTENSION)
 }
 
 /// Does the file name or path end in a native document extension?
@@ -385,8 +382,7 @@ pub fn save_to(doc: &Document, o: &SaveOptions, w: impl Write) -> Result<(), For
     let blob = |mime: &str, bytes: &[u8]| Image { mime: mime.into(), data: base64_encode(bytes), blob: None, proxy: false };
     let mut out = if o.compress { Out::Gz(Box::new(Gz::new(w).map_err(encode_err)?)) } else { Out::Plain(w) };
     let mut env = Envelope { pretty, first: true };
-    // Older apps only know the name from before the rename.
-    env.field(&mut out, "format", &if o.version < 3 { LEGACY_EXTENSION } else { EXTENSION })?;
+    env.field(&mut out, "format", &EXTENSION)?;
     env.field(&mut out, "version", &o.version)?;
     env.field(&mut out, "generator", &format!("ClerdoVector {}", env!("CARGO_PKG_VERSION")))?;
     if let Some(png) = &o.preview {
@@ -535,14 +531,12 @@ pub struct NativeFile {
 pub struct FileInfo {
     /// The file's format version (see [`VERSION`]).
     pub version: u32,
-    /// Written under the project's former name (`"format": "drawcraft"`).
-    pub legacy: bool,
 }
 
 impl FileInfo {
-    /// Written by an older version or under the former name: saving rewrites it in today's format.
+    /// Written by an older version: saving rewrites it in today's format.
     pub fn is_old(&self) -> bool {
-        self.legacy || self.version < VERSION
+        self.version < VERSION
     }
 }
 
@@ -573,7 +567,7 @@ fn load_file_within(bytes: &[u8], max_nodes: usize, max_values: usize) -> Result
         let why = if e.to_string().contains("recursion limit") { format!("its objects are nested too deep ({e})") } else { e.to_string() };
         FormatError::NotClerdovector(why)
     })?;
-    if f.format != EXTENSION && f.format != LEGACY_EXTENSION {
+    if f.format != EXTENSION {
         return Err(FormatError::NotClerdovector(format!("format is `{}`", f.format)));
     }
     if f.version > VERSION {
@@ -652,7 +646,7 @@ fn load_file_within(bytes: &[u8], max_nodes: usize, max_values: usize) -> Result
             }
         })
         .collect::<Result<_, FormatError>>()?;
-    Ok(NativeFile { doc, depth_notes, info: FileInfo { version: f.version, legacy: f.format == LEGACY_EXTENSION }, profiles })
+    Ok(NativeFile { doc, depth_notes, info: FileInfo { version: f.version }, profiles })
 }
 
 /// The members of a native file besides its document (which is skipped, not decoded).
@@ -698,7 +692,7 @@ pub fn sniff(bytes: &[u8]) -> bool {
     };
     // The cut may split a character.
     let s = String::from_utf8_lossy(&head);
-    s.trim_start().starts_with('{') && (s.contains("\"clerdovector\"") || s.contains("\"drawcraft\""))
+    s.trim_start().starts_with('{') && s.contains("\"clerdovector\"")
 }
 
 const B64: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -755,13 +749,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn files_from_before_the_rename_still_open() {
+    fn native_names_and_other_formats() {
         let d = Document::new(100.0, 50.0);
-        let legacy = String::from_utf8(save(&d, false)).unwrap().replacen("\"format\":\"clerdovector\"", "\"format\":\"drawcraft\"", 1);
-        assert!(legacy.contains("\"drawcraft\""));
-        assert!(sniff(legacy.as_bytes()));
-        assert_eq!(load(legacy.as_bytes()).unwrap().artboards[0].rect, d.artboards[0].rect);
-        assert!(is_native_name("old/Poster.DrawCraft") && is_native_name("new.clerdovector") && !is_native_name("x.svg"));
+        assert!(sniff(&save(&d, false)));
+        assert!(is_native_name("art/Poster.ClerdoVector") && is_native_name("new.clerdovector") && !is_native_name("x.svg"));
         assert!(load(br#"{"format":"other","version":1,"document":{}}"#).is_err());
     }
 
@@ -769,13 +760,11 @@ mod tests {
     fn file_info_tells_old_files() {
         let d = Document::new(10.0, 10.0);
         let current = save(&d, false);
-        assert_eq!(load_info(&current).unwrap().1, FileInfo { version: VERSION, legacy: false });
+        assert_eq!(load_info(&current).unwrap().1, FileInfo { version: VERSION });
         assert!(!load_info(&current).unwrap().1.is_old());
         let text = String::from_utf8(current).unwrap();
-        let legacy = text.replacen("\"format\":\"clerdovector\"", "\"format\":\"drawcraft\"", 1);
-        assert!(load_info(legacy.as_bytes()).unwrap().1.is_old());
         let v1 = text.replacen(&format!("\"version\":{VERSION}"), "\"version\":1", 1);
-        assert_eq!(load_info(v1.as_bytes()).unwrap().1, FileInfo { version: 1, legacy: false });
+        assert_eq!(load_info(v1.as_bytes()).unwrap().1, FileInfo { version: 1 });
         assert!(load_info(v1.as_bytes()).unwrap().1.is_old());
     }
     use clerdovector_doc::{Appearance, ImageObject, Node, NodeKind};

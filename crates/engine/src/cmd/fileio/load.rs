@@ -20,7 +20,7 @@ pub struct Loaded {
     pub warnings: Vec<String>,
     /// The document is the native one the file carries (SVG or PDF saved with Preserve Editing).
     pub restored: bool,
-    /// An older native file (the former `.drawcraft` name or format version): saving it again
+    /// An older native file (an earlier format version): saving it again
     /// rewrites it in today's format.
     pub converted: bool,
     /// Only a stand-in picture of the file (an Affinity document whose native data couldn't be
@@ -297,7 +297,7 @@ pub fn load_with(name: &str, bytes: &[u8], opts: &LoadOptions) -> Result<Loaded>
         }
         "clerdovector" | "template" => {
             let (d, info, warnings) = native_file(bytes)?;
-            converted = info.is_old() || super::extension(name) == clerdovector_format::LEGACY_EXTENSION;
+            converted = info.is_old();
             (d, warnings, false)
         }
         "svg" | "svgz" => {

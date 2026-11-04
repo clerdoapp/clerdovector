@@ -238,7 +238,7 @@ fn editing_copy(ps: &[u8]) -> Option<Result<Cow<'_, [u8]>, String>> {
 /// prolog without including it) from its layers alone (`ps`: its program, which has them) → the
 /// document and the import's notes. A file whose header says it is in the format (`illustrator`)
 /// but whose program has no layers (Illustrator 3 had none; image editors still export their
-/// paths so, storytold/photocraft#6036) is read with its art on one layer. `None` when the program
+/// paths so) is read with its art on one layer. `None` when the program
 /// has no layers and isn't in the format: other PostScript isn't read as the format's operators.
 pub(in super::super) fn program_alone(ps: &[u8], illustrator: bool) -> Option<Result<(Document, Vec<String>), String>> {
     if ai::has_eps_data(ps) {

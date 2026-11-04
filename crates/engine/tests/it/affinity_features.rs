@@ -1,7 +1,6 @@
 //! Affinity → ClerdoVector mapping of pages, master pages, tables, paragraph formats, text scale,
 //! layer effects and embedded documents, on original synthetic documents built with the reader's
-//! `synth` feature (no Affinity software or files were used). The fixtures follow DesignCraft's
-//! Affinity import tests, whose reader ClerdoVector shares.
+//! `synth` feature (no Affinity software or files were used).
 
 use crate::affinity_docs;
 use crate::text_fixture;

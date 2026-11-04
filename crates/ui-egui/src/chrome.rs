@@ -31,7 +31,7 @@ use status_bar::{StatusReadoutWidths, status_readouts};
 use tabs::{CLOSE_BEFORE_TITLE, first_tab_shown, tab_title};
 pub use tabs::{doc_tabs, isolation_bar, step_document};
 
-/// The application bar's height, in points (compact, as in PhotoCraft).
+/// The application bar's height, in points (compact).
 pub const APP_BAR_HEIGHT: f32 = 32.0;
 /// The brand mark's side.
 const MARK: f32 = 18.0;
@@ -83,7 +83,7 @@ pub fn app_bar(app: &mut ClerdovectorApp, ui: &mut Ui) {
             let ws = ui.painter().layout_no_wrap(ws_name, egui::FontId::proportional(12.0), t.text);
             let ws_w = (ws.size().x + 36.0).clamp(112.0, 190.0);
             let gap = ui.spacing().item_spacing.x;
-            // The search icon, as in PhotoCraft: shown while a minimal switcher fits beside it.
+            // The search icon: shown while a minimal switcher fits beside it.
             let icon = 28.0;
             let search = room >= 64.0 + 8.0 + gap + icon;
             let ws_w = ws_w.min(room - 8.0 - gap - if search { icon } else { 0.0 }).max(64.0);
@@ -200,7 +200,7 @@ mod visual_regressions {
 
     #[test]
     fn capture_chrome_visual_fixtures() {
-        let Some(directory) = std::env::var_os("CRAFT_UI_VISUAL_FIXTURES").map(std::path::PathBuf::from) else {
+        let Some(directory) = std::env::var_os("CLERDO_UI_VISUAL_FIXTURES").map(std::path::PathBuf::from) else {
             return;
         };
         std::fs::create_dir_all(&directory).unwrap();

@@ -138,7 +138,7 @@ fn text_with_hyphenation_and_tab_attributes_opens_instead_of_failing() {
     assert!(!r.warnings.iter().any(|w| w.contains("doesn't know") || w.contains("couldn't be read")), "{:?}", r.warnings);
 }
 
-/// An Illustrator 3 file of paths alone, as image editors export their paths (storytold/photocraft#6036):
+/// An Illustrator 3 file of paths alone, as image editors export their paths:
 /// no prolog and no layers, the paths unpainted (`n` closes, `N` doesn't), a compound path of two.
 const PATHS_ONLY: &str = "%!PS-Adobe-2.0 EPSF-1.2\n%%Creator: an image editor\n%%BoundingBox: 0 0 200 100\n\
     %AI3_Cropmarks: 0 0 200 100\n%%EndComments\n%%EndProlog\n%%BeginSetup\n%%EndSetup\n\

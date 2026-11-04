@@ -249,12 +249,12 @@ fn expanding_a_fill_gives_its_plug_in_effect_the_fill_it_sits_on() {
     assert_eq!(clip.path_data().unwrap().bounds(), triangle().bounds(), "the triangle the canvas fills");
 }
 
-/// `CRAFT_PLUGIN_PAINTS_WASM=<folder>` saves a test live effect to try in the app
+/// `CLERDO_PLUGIN_PAINTS_WASM=<folder>` saves a test live effect to try in the app
 /// (`stroke-width-test-effect.wasm`): it draws a triangle over the area 100,80–300,230 while its
 /// object's stroke is 5 pt wide, and hands the geometry back otherwise.
 #[test]
 fn stroke_width_test_effect() {
-    let Some(dir) = std::env::var_os("CRAFT_PLUGIN_PAINTS_WASM") else { return };
+    let Some(dir) = std::env::var_os("CLERDO_PLUGIN_PAINTS_WASM") else { return };
     let triangle = PathData::single(SubPath::polyline(&[Point::new(100.0, 230.0), Point::new(300.0, 230.0), Point::new(200.0, 80.0)], true));
     let manifest = r#"{"id":"org.example.strokewidth","name":"Stroke Width (test plug-in)","version":"1","kind":"effect",
         "description":"Draws a triangle while the object's stroke is 5 pt wide.","params":{}}"#;
@@ -310,12 +310,12 @@ fn filters_set_effects_and_stroke_styles() {
     }
 }
 
-/// `CRAFT_PLUGIN_FRAME_WASM=<folder>` saves a test filter to try in the app
+/// `CLERDO_PLUGIN_FRAME_WASM=<folder>` saves a test filter to try in the app
 /// (`rough-frame-test-filter.wasm`): it adds a frame around 60,40–340,260 with a 6 pt stroke with
 /// round joins and caps, roughened by the Roughen effect.
 #[test]
 fn rough_frame_test_filter() {
-    let Some(dir) = std::env::var_os("CRAFT_PLUGIN_FRAME_WASM") else { return };
+    let Some(dir) = std::env::var_os("CLERDO_PLUGIN_FRAME_WASM") else { return };
     let frame = PathData::single(SubPath::polyline(
         &[Point::new(60.0, 40.0), Point::new(340.0, 40.0), Point::new(340.0, 260.0), Point::new(60.0, 260.0)],
         true,

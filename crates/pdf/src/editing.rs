@@ -18,8 +18,6 @@ use crate::lab_spot::find;
 
 /// The embedded file holding the native document (its name among the PDF's attachments).
 pub const EDITING_FILE: &str = "clerdovector-editing.clerdovector";
-/// The editing file's name from before the project was renamed: still read.
-pub const LEGACY_EDITING_FILE: &str = "drawcraft-editing.drawcraft";
 
 /// The editing file's description: this text, then the hash of the pages.
 const DESCRIPTION: &str = "ClerdoVector editing data; page hash ";
@@ -121,12 +119,11 @@ fn editing_spec<'a>(node: &Dict<'a>, depth: usize, seen: &mut HashSet<ObjectIden
     })
 }
 
-/// A file specification naming the editing file (current or legacy name), in any text string
-/// encoding.
+/// A file specification naming the editing file, in any text string encoding.
 fn is_editing_file(spec: &Dict<'_>) -> bool {
     [&b"UF"[..], b"F"].into_iter().filter_map(|k| spec.get::<PdfString<'_>>(k)).any(|name| {
         let name = text_string(name.as_bytes());
-        name == EDITING_FILE || name == LEGACY_EDITING_FILE
+        name == EDITING_FILE
     })
 }
 

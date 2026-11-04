@@ -216,7 +216,6 @@ mod tests {
             ("art", "art.svg"),
             ("art.v2", "art.v2.svg"),
             ("art.svg", "art.svg"),
-            ("old.drawcraft", "old.svg"),
             ("photo.png", "photo.svg"),
             ("", ""),
         ] {

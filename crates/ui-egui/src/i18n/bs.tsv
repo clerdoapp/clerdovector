@@ -4,8 +4,7 @@
 # Clean-room: every entry is written from the meaning of ClerdoVector's English label, in standard
 # Bosnian (historija, sačuvaj, tačka, datoteka, postavke); no other application's localisation was
 # consulted or copied. Drafted with AI assistance (Claude Code) from the English meaning; not yet
-# reviewed by a native speaker. The wording is shared with storytold/craft-i18n
-# (locales/bs/clerdovector.tsv and common.tsv). Vocabulary: radna ploča (artboard), putanja (path),
+# reviewed by a native speaker. Vocabulary: radna ploča (artboard), putanja (path),
 # sidrena tačka (anchor point), potez (stroke), ispuna (fill), gradijent, uzorci boja (Swatches),
 # uzorak (pattern), neprozirnost (opacity), četkica (brush), praćenje slike (Image Trace).
 # Product and format names (ClerdoVector, OpenType, PDF ...) stay as they are; `{placeholders}`,

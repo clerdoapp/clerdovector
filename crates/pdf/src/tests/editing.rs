@@ -102,17 +102,7 @@ fn the_hash_is_read_from_a_description_in_any_encoding() {
 }
 
 #[test]
-fn the_legacy_name_is_read_and_plain_pdfs_have_no_editing_data() {
-    let r = pdf_with(Some(b"legacy"), false);
-    let name = format!("({EDITING_FILE})");
-    let legacy = format!("({LEGACY_EDITING_FILE}){}", " ".repeat(EDITING_FILE.len() - LEGACY_EDITING_FILE.len()));
-    let mut old = r.bytes.clone();
-    // Every place the name is written (/F, /UF and the name tree key).
-    while let Some(at) = old.windows(name.len()).position(|w| w == name.as_bytes()) {
-        old[at..at + legacy.len()].copy_from_slice(legacy.as_bytes());
-    }
-    let e = editing(&old).unwrap();
-    assert_eq!((e.data.as_slice(), e.intact), (&b"legacy"[..], true));
+fn plain_pdfs_have_no_editing_data() {
     // Off, or with no native document given: nothing embedded (the latter warns).
     let plain = export(&doc(), &PdfOptions::default()).unwrap();
     assert_eq!(editing(&plain), None);

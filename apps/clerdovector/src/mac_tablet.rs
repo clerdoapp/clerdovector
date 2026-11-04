@@ -20,8 +20,7 @@
 //! The monitor also turns off mouse event coalescing (`NSEvent.mouseCoalescingEnabled`), which
 //! merges the drags that queue up between two reads into one: every report of the pen arrives.
 //!
-//! The mapping comes from PhotoCraft's `crates/tablet` (`appkit.rs` and `macos.rs`), with the
-//! pressure and the pen's end only. It is plain values, tested on every platform; the monitor
+//! The mapping keeps the pressure and the pen's end only. It is plain values, tested on every platform; the monitor
 //! reads them.
 #![cfg_attr(not(target_os = "macos"), allow(dead_code))]
 
