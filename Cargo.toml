@@ -4,7 +4,7 @@ members = ["crates/*", "apps/*", "xtask"]
 default-members = ["crates/*", "apps/clerdovector", "apps/clerdovector-cli", "xtask"]
 
 [workspace.package]
-version = "0.20.2"
+version = "0.20.3"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 rust-version = "1.95"
@@ -144,6 +144,12 @@ debug = "line-tables-only"
 [profile.release]
 lto = "thin"
 codegen-units = 1
+
+# The web app (apps/clerdovector-web/index.html): optimised for size, since every visitor downloads
+# it. About a third less code than `release`, so the page loads sooner.
+[profile.web]
+inherits = "release"
+opt-level = "s"
 
 [patch.crates-io]
 hayro-syntax = { git = "https://github.com/storytold/craft-libs", rev = "92d392cff132eaf53e13afff77f38b5c11b73aa0" }
