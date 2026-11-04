@@ -264,6 +264,7 @@ fn latest_release(repo: &str) -> Result<String, String> {
 
 /// From a release's JSON: its version and page when it is newer than `current`, `None` when it
 /// isn't. The page must be on github.com, as the app opens it in the browser.
+#[cfg_attr(target_arch = "wasm32", allow(dead_code))]
 fn newer_release(body: &str, current: &str) -> Result<Option<(String, String)>, String> {
     let v: Value = serde_json::from_str(body).map_err(|e| format!("GitHub's answer couldn't be read ({e})"))?;
     let tag = v["tag_name"].as_str().ok_or("the release has no version tag")?;
@@ -279,6 +280,7 @@ fn newer_release(body: &str, current: &str) -> Result<Option<(String, String)>, 
 }
 
 /// `v1.2.3` or `1.2.3-beta` → `[1, 2, 3]` (at most four numbers; pre-release text ignored).
+#[cfg_attr(target_arch = "wasm32", allow(dead_code))]
 fn version_parts(s: &str) -> Option<Vec<u64>> {
     let core = s.trim().trim_start_matches(['v', 'V']).split(['-', '+']).next()?;
     let parts: Option<Vec<u64>> = core.split('.').map(|p| p.parse().ok()).collect();
