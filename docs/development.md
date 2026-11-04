@@ -30,7 +30,7 @@ craft-fonts checkout adds the fonts the site serves beside the wasm: Trunk's `po
 `CRAFT_FONTS_DIR`, and skips with a warning any listed face an older checkout lacks). See
 [Arabic fonts and the web build](#arabic-fonts-and-the-web-build).
 
-Any static file server works for `dist/web`, for example `python3 -m http.server 8766` inside that directory. The release `.wasm` is about 17.5 MB, or 7.1 MB gzipped, so serve it with compression.
+Any static file server works for `dist/web`, for example `python3 -m http.server 8766` inside that directory. The `.wasm` is large (about 81 MB, or 29 MB gzipped, in 0.20.2, before the size-optimised `web` profile that `index.html` now builds with), so serve it with compression.
 
 URL flag: `?webgl` forces the WebGL2 backend.
 
